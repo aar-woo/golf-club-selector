@@ -221,7 +221,7 @@ PODS:
     - ExpoModulesCore
   - ExpoFileSystem (18.0.5):
     - ExpoModulesCore
-  - ExpoFont (13.0.1):
+  - ExpoFont (13.0.4):
     - ExpoModulesCore
   - ExpoHaptics (14.0.0):
     - ExpoModulesCore
@@ -254,7 +254,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - ExpoSplashScreen (0.29.18):
+  - ExpoSplashScreen (0.29.22):
     - ExpoModulesCore
   - ExpoSymbols (0.2.0):
     - ExpoModulesCore
@@ -2310,13 +2310,13 @@ SPEC CHECKSUMS:
   ExpoAsset: 6f7a8887cbb9fb39fdb0808e7f6f74ba0e1ae9b6
   ExpoBlur: 2b92367da8158eeaee9bfa940d82512a09c8e0c6
   ExpoFileSystem: 6774e1aa2d3c7edfde11855cf5c635a3565a4918
-  ExpoFont: 12b0217e42ac97029d0f317f0486039a8508cf52
+  ExpoFont: f354e926f8feae5e831ec8087f36652b44a0b188
   ExpoHaptics: f8eacde90398b8be3648ed823b6e9e6bf87ece3f
   ExpoHead: 0a8bb3bdc603d2249e7a590a969310230ed1b389
   ExpoKeepAwake: 22173f45d767c7d37403fdf48292726901d69ce7
   ExpoLinking: 40e30b571ffb77b280a38bed137d89b21f46f2a0
   ExpoModulesCore: 5c2036ec792be80ebf777ba5bbe197f20d9b6eed
-  ExpoSplashScreen: 5397c2419fb3ca0788de37ea2547deac376aad83
+  ExpoSplashScreen: 0f281e3c2ded4757d2309276c682d023c6299c77
   ExpoSymbols: ed2f35e4a0290ff242eb295bd47adff2e46f5bfc
   ExpoSystemUI: 778d700c6f38d3d7b8794460f50c1ca05c4f7462
   ExpoWebBrowser: b658ba8a9161f1b54afb279591cfce2cb73330fa
