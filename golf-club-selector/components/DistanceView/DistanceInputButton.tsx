@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   clickerButton: {
-    width: 90,
+    width: 100,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "grey",
@@ -28,20 +28,32 @@ const styles = StyleSheet.create({
 
 type DistanceInputButtonType = {
   handleClick: (direction: "left" | "right") => void;
+  handleLongPress: (direction: "left" | "right") => void;
+  handleLongPressOut: () => void;
 };
 
-const DistanceInputButton = ({ handleClick }: DistanceInputButtonType) => {
+const DistanceInputButton = ({
+  handleClick,
+  handleLongPress,
+  handleLongPressOut,
+}: DistanceInputButtonType) => {
   return (
     <View style={[styles.container]}>
       <Pressable
         style={[styles.clickerLeft, styles.clickerButton]}
         onPress={() => handleClick("left")}
+        onLongPress={() => handleLongPress("left")}
+        onPressOut={handleLongPressOut}
+        delayLongPress={200}
       >
         <FontAwesome name="caret-left" size={40} color="black" />
       </Pressable>
       <Pressable
         style={[styles.clickerRight, styles.clickerButton]}
         onPress={() => handleClick("right")}
+        onLongPress={() => handleLongPress("right")}
+        onPressOut={handleLongPressOut}
+        delayLongPress={200}
       >
         <FontAwesome name="caret-right" size={40} color="black" />
       </Pressable>

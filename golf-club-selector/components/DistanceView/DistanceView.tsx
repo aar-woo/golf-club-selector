@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DistanceInputButton from "./DistanceInputButton";
 import { Text, View, StyleSheet } from "react-native";
 
@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
 });
 
 const DistanceView = () => {
-  const [distance, setDistance] = useState<number>(0);
+  const [distance, setDistance] = useState<number>(100);
+  const counterRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleClickChange = (direction: "left" | "right") => {
     switch (direction) {
@@ -33,14 +34,47 @@ const DistanceView = () => {
     }
   };
 
+  const handleLongPressChange = (direction: "left" | "right") => {
+    switch (direction) {
+      case "left":
+        counterRef.current = setInterval(() => {
+          if (distance <= 0 && counterRef.current) {
+            clearInterval(counterRef.current);
+            return;
+          }
+          setDistance((prev) => {
+            if (prev <= 0) {
+              if (counterRef.current) {
+                clearInterval(counterRef.current);
+              }
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 20);
+        break;
+      case "right":
+        counterRef.current = setInterval(() => {
+          setDistance((prev) => prev + 1);
+        }, 20);
+    }
+  };
+
+  const handleLongPressOut = () => {
+    if (counterRef.current) {
+      clearInterval(counterRef.current);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.distanceDisplay}>
         <Text style={styles.distanceText}>{distance}</Text>
       </View>
       <DistanceInputButton
-        distance={distance}
         handleClick={handleClickChange}
+        handleLongPress={handleLongPressChange}
+        handleLongPressOut={handleLongPressOut}
       />
     </View>
   );
