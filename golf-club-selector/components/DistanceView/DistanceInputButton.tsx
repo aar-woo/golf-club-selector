@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +10,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   clickerButton: {
-    width: 100,
+    width: 90,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "grey",
@@ -24,20 +26,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const DistanceInputButton = () => {
+type DistanceInputButtonType = {
+  handleClick: (direction: "left" | "right") => void;
+};
+
+const DistanceInputButton = ({ handleClick }: DistanceInputButtonType) => {
   return (
     <View style={[styles.container]}>
       <Pressable
         style={[styles.clickerLeft, styles.clickerButton]}
-        onPress={() => console.log("left")}
+        onPress={() => handleClick("left")}
       >
-        <Text>Left</Text>
+        <FontAwesome name="caret-left" size={40} color="black" />
       </Pressable>
       <Pressable
         style={[styles.clickerRight, styles.clickerButton]}
-        onPress={() => console.log("right")}
+        onPress={() => handleClick("right")}
       >
-        <Text>Right</Text>
+        <FontAwesome name="caret-right" size={40} color="black" />
       </Pressable>
     </View>
   );
