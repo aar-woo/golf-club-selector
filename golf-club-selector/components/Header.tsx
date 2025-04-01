@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import colors from "@/themes/colors";
 
 const styles = StyleSheet.create({
   title: {
-    color: "#006745",
+    color: colors.primaryGreen,
     fontSize: 30,
     fontFamily: "Boldonse-Regular",
   },

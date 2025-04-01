@@ -1,19 +1,20 @@
 import { useState, useRef } from "react";
 import DistanceInputButton from "./DistanceInputButton";
 import { Text, View, StyleSheet } from "react-native";
-
+import colors from "@/themes/colors";
 const styles = StyleSheet.create({
   container: {
     height: 200,
     justifyContent: "space-around",
   },
   distanceDisplay: {
-    height: "auto",
     justifyContent: "center",
     alignItems: "center",
   },
   distanceText: {
+    height: 100,
     fontSize: 100,
+    color: colors.primaryBlue,
   },
 });
 
@@ -70,6 +71,7 @@ const DistanceView = () => {
     <View style={styles.container}>
       <View style={styles.distanceDisplay}>
         <Text style={styles.distanceText}>{distance}</Text>
+        <Text style={{ fontSize: 20, marginBottom: 20 }}>Yards</Text>
       </View>
       <DistanceInputButton
         handleClick={handleClickChange}
