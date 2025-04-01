@@ -9,6 +9,7 @@ export default function Index() {
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
+        marginTop: 60,
       }}
     >
       <Header />
