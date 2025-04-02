@@ -35,7 +35,15 @@ const DistanceView = ({
     <View style={styles.container}>
       <View style={styles.distanceDisplay}>
         <Text style={styles.distanceText}>{distance}</Text>
-        <Text style={{ fontSize: 20, marginBottom: 20 }}>Yards</Text>
+        <Text
+          style={{
+            fontSize: 20,
+            marginBottom: 20,
+            fontFamily: "Hind-SemiBold",
+          }}
+        >
+          Yards
+        </Text>
       </View>
       <DistanceInputButton
         handleClick={onClickChange}

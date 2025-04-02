@@ -6,6 +6,30 @@
       "sha1": "4cbe9b11f0db000b499ee91b154564c36495fcb8"
     },
     {
+      "path": "assets/fonts/Hind-Bold.ttf",
+      "sha1": "d66e1dd248db79a3afb8e807ffab9b29ba0b9f59"
+    },
+    {
+      "path": "assets/fonts/Hind-Regular.ttf",
+      "sha1": "046abd8541e56d2dcd0071940133b91165625bf9"
+    },
+    {
+      "path": "assets/fonts/Hind-SemiBold.ttf",
+      "sha1": "0c9e8fca5676792ed9dc192d0ebaa2aa78c2d3d0"
+    },
+    {
+      "path": "assets/fonts/Montserrat-Bold.ttf",
+      "sha1": "c7d907722af4fb845ab97d515bb414f29651f000"
+    },
+    {
+      "path": "assets/fonts/Montserrat-Regular.ttf",
+      "sha1": "1c8119b38eef1914a4fbd9f6cfdedf198445ab97"
+    },
+    {
+      "path": "assets/fonts/Montserrat-SemiBold.ttf",
+      "sha1": "d491c9d0af61faef59ca807737b560170f547f5b"
+    },
+    {
       "path": "assets/fonts/SpaceMono-Regular.ttf",
       "sha1": "fae3a5a43b50e0408fd61e14383d94a023d332b0"
     }

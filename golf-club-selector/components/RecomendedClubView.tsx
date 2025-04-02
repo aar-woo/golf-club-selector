@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
 
   textContainer: {
     position: "absolute",
-    fontSize: 35,
+    fontSize: 30,
+    fontFamily: "Montserrat-SemiBold",
   },
 
   img: {
