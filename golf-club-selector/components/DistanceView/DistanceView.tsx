@@ -1,4 +1,3 @@
-import { useState, useRef } from "react";
 import DistanceInputButton from "./DistanceInputButton";
 import { Text, View, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
@@ -19,55 +18,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const DistanceView = () => {
-  const [distance, setDistance] = useState<number>(100);
-  const counterRef = useRef<NodeJS.Timeout | null>(null);
+type DistanceViewType = {
+  distance: number;
+  onClickChange: (direction: "left" | "right") => void;
+  onLongPress: (direction: "left" | "right") => void;
+  onLongPressOut: () => void;
+};
 
-  const handleClickChange = (direction: "left" | "right") => {
-    switch (direction) {
-      case "left":
-        if (distance === 0) {
-          return;
-        }
-        setDistance(distance - 1);
-        break;
-      case "right":
-        setDistance(distance + 1);
-    }
-  };
-
-  const handleLongPressChange = (direction: "left" | "right") => {
-    switch (direction) {
-      case "left":
-        counterRef.current = setInterval(() => {
-          if (distance <= 0 && counterRef.current) {
-            clearInterval(counterRef.current);
-            return;
-          }
-          setDistance((prev) => {
-            if (prev <= 0) {
-              if (counterRef.current) {
-                clearInterval(counterRef.current);
-              }
-              return 0;
-            }
-            return prev - 1;
-          });
-        }, 20);
-        break;
-      case "right":
-        counterRef.current = setInterval(() => {
-          setDistance((prev) => prev + 1);
-        }, 20);
-    }
-  };
-
-  const handleLongPressOut = () => {
-    if (counterRef.current) {
-      clearInterval(counterRef.current);
-    }
-  };
-
+const DistanceView = ({
+  distance,
+  onClickChange,
+  onLongPress,
+  onLongPressOut,
+}: DistanceViewType) => {
   return (
     <View style={styles.container}>
       <View style={styles.distanceDisplay}>
@@ -75,9 +38,9 @@ const DistanceView = () => {
         <Text style={{ fontSize: 20, marginBottom: 20 }}>Yards</Text>
       </View>
       <DistanceInputButton
-        handleClick={handleClickChange}
-        handleLongPress={handleLongPressChange}
-        handleLongPressOut={handleLongPressOut}
+        handleClick={onClickChange}
+        handleLongPress={onLongPress}
+        handleLongPressOut={onLongPressOut}
       />
     </View>
   );
