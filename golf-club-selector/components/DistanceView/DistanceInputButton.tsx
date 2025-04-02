@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import colors from "@/themes/colors";
+import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   container: {

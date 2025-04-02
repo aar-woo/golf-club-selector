@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import DistanceInputButton from "./DistanceInputButton";
 import { Text, View, StyleSheet } from "react-native";
-import colors from "@/themes/colors";
+import colors from "@/consts/colors";
+
 const styles = StyleSheet.create({
   container: {
     height: 200,
