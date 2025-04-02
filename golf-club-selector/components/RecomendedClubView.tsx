@@ -8,6 +8,7 @@ import {
   ImageSourcePropType,
 } from "react-native";
 import ClubsEnum from "@/consts/ClubsEnum";
+import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 30,
     fontFamily: "Montserrat-SemiBold",
+    color: colors.snowWhite,
   },
 
   img: {

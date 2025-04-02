@@ -16,6 +16,7 @@ const DistanceAndClubView = () => {
           return;
         }
         setDistance(distance - 1);
+        tempDistanceRef.current = tempDistanceRef.current - 1;
         setDisplayDistance(tempDistanceRef.current);
         break;
       case "right":

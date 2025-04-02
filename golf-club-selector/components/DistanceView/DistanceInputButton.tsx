@@ -47,7 +47,7 @@ const DistanceInputButton = ({
         onPressOut={handleLongPressOut}
         delayLongPress={200}
       >
-        <FontAwesome name="caret-left" size={40} color="black" />
+        <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
       </Pressable>
       <Pressable
         style={[styles.clickerRight, styles.clickerButton]}
@@ -56,7 +56,7 @@ const DistanceInputButton = ({
         onPressOut={handleLongPressOut}
         delayLongPress={200}
       >
-        <FontAwesome name="caret-right" size={40} color="black" />
+        <FontAwesome name="caret-right" size={40} color={colors.lightGray} />
       </Pressable>
     </View>
   );
