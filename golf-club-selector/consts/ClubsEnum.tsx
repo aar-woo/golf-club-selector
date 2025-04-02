@@ -9,7 +9,7 @@ enum ClubsEnum {
   SEVEN_IRON = "7 Iron",
   EIGHT_IRON = "8 Iron",
   NINE_IRON = "9 Iron",
-  PITCHING_WEDGE = "Pitching Wedge",
+  PITCHING_WEDGE = "P Wedge",
   GAP_WEDGE = "Gap Wedge",
   SAND_WEDGE = "Sand Wedge",
   LOB_WEDGE = "Lob Wedge",

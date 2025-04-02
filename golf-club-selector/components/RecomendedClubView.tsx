@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import getRecClub from "@/utilities/clubCalculator";
-import { Text, View, StyleSheet, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ImageSourcePropType,
+} from "react-native";
 import ClubsEnum from "@/consts/ClubsEnum";
 
 const styles = StyleSheet.create({
@@ -11,7 +17,13 @@ const styles = StyleSheet.create({
 
   textContainer: {
     position: "absolute",
-    fontSize: 40,
+    fontSize: 35,
+  },
+
+  img: {
+    height: 160,
+    width: 160,
+    resizeMode: "contain",
   },
 });
 
@@ -19,9 +31,36 @@ type RecomendedClubViewType = {
   distance: number;
 };
 
+type ClubData = {
+  unit?: string;
+  clubType: string;
+  img: ImageSourcePropType;
+};
+
 const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
   const [club, setClub] = useState<ClubsEnum>(ClubsEnum.PUTTER);
   const clubSplit = club.split(" ");
+
+  const recClub: ClubData = {
+    unit:
+      club === ClubsEnum.PUTTER || club === ClubsEnum.DRIVER
+        ? undefined
+        : clubSplit[0],
+    clubType:
+      club === ClubsEnum.PUTTER || club === ClubsEnum.DRIVER
+        ? clubSplit[0]
+        : clubSplit[1],
+    img:
+      club === ClubsEnum.PUTTER
+        ? require("@/assets/images/putter-icon.png")
+        : club === ClubsEnum.DRIVER
+        ? require("@/assets/images/driver-icon.png")
+        : club.toLowerCase().includes("wood")
+        ? require("@/assets/images/wood-icon.png")
+        : clubSplit[1].toLowerCase().includes("wedge")
+        ? require("@/assets/images/wedge-icon.png")
+        : require("@/assets/images/iron-icon.png"),
+  };
 
   useEffect(() => {
     setClub(getRecClub(distance));
@@ -29,11 +68,22 @@ const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textContainer}>{clubSplit[0]}</Text>
-      <Image
-        source={require("@/assets/images/golf-club-generic-icon.png")}
-        style={{ width: 140, height: 140 }}
-      />
+      {recClub.unit && (
+        <Text
+          style={{
+            ...styles.textContainer,
+            left:
+              club === ClubsEnum.GAP_WEDGE ||
+              club === ClubsEnum.LOB_WEDGE ||
+              club == ClubsEnum.SAND_WEDGE
+                ? -20
+                : 10,
+          }}
+        >
+          {recClub.unit}
+        </Text>
+      )}
+      <Image style={styles.img} source={recClub.img} />
 
       <Text
         style={{
@@ -42,7 +92,7 @@ const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
           right: 0,
         }}
       >
-        {clubSplit[1]}
+        {recClub.clubType}
       </Text>
     </View>
   );

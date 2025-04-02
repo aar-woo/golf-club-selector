@@ -25,8 +25,10 @@ const getRecClub = (distance: number): GolfClubs => {
     return GolfClubs.PITCHING_WEDGE;
   } else if (distance > 70) {
     return GolfClubs.GAP_WEDGE;
-  } else if (distance > 30) {
+  } else if (distance > 50) {
     return GolfClubs.SAND_WEDGE;
+  } else if (distance > 30) {
+    return GolfClubs.LOB_WEDGE;
   } else {
     return GolfClubs.PUTTER;
   }
