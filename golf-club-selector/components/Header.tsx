@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import colors from "@/themes/colors";
+import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryGreen,
+    color: colors.snowWhite,
     fontSize: 30,
     fontFamily: "Boldonse-Regular",
+    marginTop: 50,
   },
 });
 

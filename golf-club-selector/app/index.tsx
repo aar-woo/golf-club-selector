@@ -1,21 +1,29 @@
 import Header from "@/components/Header";
-import { View } from "react-native";
-import DistanceView from "@/components/DistanceView/DistanceView";
+import { ImageBackground, View } from "react-native";
+
+import DistanceAndClubView from "./DistanceAndClubView";
 
 export default function Index() {
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
-        marginTop: 60,
       }}
     >
-      <Header />
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <DistanceView />
-      </View>
+      <ImageBackground
+        source={require("@/assets/images/bg-gradient-green.png")}
+        style={{
+          flex: 1,
+          width: "100%",
+
+          alignItems: "center",
+        }}
+      >
+        <Header />
+        <DistanceAndClubView />
+      </ImageBackground>
     </View>
   );
 }

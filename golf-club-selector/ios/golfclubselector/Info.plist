@@ -78,7 +78,13 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Boldonse-Regular.ttf</string>
+		<string>Montserrat-Bold.ttf</string>
 		<string>SpaceMono-Regular.ttf</string>
+		<string>Hind-Bold.ttf</string>
+		<string>Hind-Regular.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
+		<string>Hind-SemiBold.ttf</string>
+		<string>Montserrat-SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

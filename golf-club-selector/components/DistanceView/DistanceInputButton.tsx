@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import colors from "@/themes/colors";
+import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +47,7 @@ const DistanceInputButton = ({
         onPressOut={handleLongPressOut}
         delayLongPress={200}
       >
-        <FontAwesome name="caret-left" size={40} color="black" />
+        <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
       </Pressable>
       <Pressable
         style={[styles.clickerRight, styles.clickerButton]}
@@ -56,7 +56,7 @@ const DistanceInputButton = ({
         onPressOut={handleLongPressOut}
         delayLongPress={200}
       >
-        <FontAwesome name="caret-right" size={40} color="black" />
+        <FontAwesome name="caret-right" size={40} color={colors.lightGray} />
       </Pressable>
     </View>
   );
