@@ -1,7 +1,18 @@
 import Header from "@/components/Header";
 import { ImageBackground, View } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient";
+import colors from "@/consts/colors";
 import DistanceAndClubView from "./DistanceAndClubView";
+import { StyleSheet } from "react-native";
+const styles = StyleSheet.create({
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "85%",
+  },
+});
 
 export default function Index() {
   return (
@@ -10,20 +21,16 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: colors.lightGray,
       }}
     >
-      <ImageBackground
-        source={require("@/assets/images/bg-gradient-green.png")}
-        style={{
-          flex: 1,
-          width: "100%",
+      <LinearGradient
+        colors={["transparent", "rgba(138, 138, 138, 0.8)"]}
+        style={styles.background}
+      />
 
-          alignItems: "center",
-        }}
-      >
-        <Header />
-        <DistanceAndClubView />
-      </ImageBackground>
+      <Header />
+      <DistanceAndClubView />
     </View>
   );
 }

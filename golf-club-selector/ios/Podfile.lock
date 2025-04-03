@@ -229,6 +229,8 @@ PODS:
     - ExpoModulesCore
   - ExpoKeepAwake (14.0.1):
     - ExpoModulesCore
+  - ExpoLinearGradient (14.0.2):
+    - ExpoModulesCore
   - ExpoLinking (7.0.3):
     - ExpoModulesCore
   - ExpoModulesCore (2.1.1):
@@ -2033,6 +2035,7 @@ DEPENDENCIES:
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoHead (from `../node_modules/expo-router/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoLinking (from `../node_modules/expo-linking/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -2148,6 +2151,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-router/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  ExpoLinearGradient:
+    :path: "../node_modules/expo-linear-gradient/ios"
   ExpoLinking:
     :path: "../node_modules/expo-linking/ios"
   ExpoModulesCore:
@@ -2314,6 +2319,7 @@ SPEC CHECKSUMS:
   ExpoHaptics: f8eacde90398b8be3648ed823b6e9e6bf87ece3f
   ExpoHead: 0a8bb3bdc603d2249e7a590a969310230ed1b389
   ExpoKeepAwake: 22173f45d767c7d37403fdf48292726901d69ce7
+  ExpoLinearGradient: 35ebd83b16f80b3add053a2fd68cc328ed927f60
   ExpoLinking: 40e30b571ffb77b280a38bed137d89b21f46f2a0
   ExpoModulesCore: 5c2036ec792be80ebf777ba5bbe197f20d9b6eed
   ExpoSplashScreen: 0f281e3c2ded4757d2309276c682d023c6299c77

@@ -8,6 +8,7 @@ const colors: Colors = {
   lightGray: "#D8D8D8",
   snowWhite: "#FFFBFC",
   primaryBlue: "#044B7F",
+  lightBlue: "#1F68A1",
 };
 
 export default colors;

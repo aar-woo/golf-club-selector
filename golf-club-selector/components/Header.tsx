@@ -4,7 +4,7 @@ import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.snowWhite,
+    color: colors.primaryGreen,
     fontSize: 30,
     fontFamily: "Boldonse-Regular",
     marginTop: 50,
