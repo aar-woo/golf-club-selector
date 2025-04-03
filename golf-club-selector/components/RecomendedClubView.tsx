@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 30,
     fontFamily: "Montserrat-SemiBold",
-    color: colors.snowWhite,
+    color: colors.primaryBlue,
   },
 
   img: {

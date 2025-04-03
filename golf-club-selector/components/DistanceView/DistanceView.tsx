@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   distanceText: {
     height: 100,
     fontSize: 100,
-    color: colors.lightGray,
+    color: colors.primaryBlue,
   },
 });
 
@@ -40,7 +40,7 @@ const DistanceView = ({
             fontSize: 20,
             marginBottom: 20,
             fontFamily: "Hind-SemiBold",
-            color: colors.lightGray,
+            color: colors.lightBlue,
           }}
         >
           Yards
