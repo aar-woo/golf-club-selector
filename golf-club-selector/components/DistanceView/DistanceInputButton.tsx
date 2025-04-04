@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 60,
-    boxShadow: "0 8.5 2 0.7 black",
+    boxShadow: `0 8.5 0 0.8 ${colors.darkGray}`,
   },
   clickerButton: {
     width: 100,
@@ -17,25 +17,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: colors.gray,
     borderWidth: 1,
-    shadowColor: "black",
-    shadowRadius: 1,
+    borderColor: colors.darkGray,
+    shadowColor: colors.darkGray,
+    shadowRadius: 0,
     shadowOpacity: 1,
   },
   clickerButtonActive: {
     shadowOpacity: 0,
+    backgroundColor: "#615A56",
     transform: [{ translateY: 5 }],
   },
   clickerLeft: {
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     transform: [{ skewY: "4deg" }],
-    shadowOffset: { width: -0.5, height: 5.3 },
+    shadowOffset: { width: -0.5, height: 5.8 },
   },
   clickerRight: {
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
     transform: [{ skewY: "-4deg" }],
-    shadowOffset: { width: 0.5, height: 5.3 },
+    shadowOffset: { width: 0.5, height: 5.8 },
   },
 });
 
