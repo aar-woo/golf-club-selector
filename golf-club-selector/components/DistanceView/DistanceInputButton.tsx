@@ -10,12 +10,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 60,
   },
+  containerActiveLeft: {
+    transform: [{ rotate: "-1deg" }],
+  },
+  containerActiveRight: {
+    transform: [{ rotate: "1deg" }],
+  },
   clickerButton: {
     width: 100,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.gray,
+    boxShadow: "0 5px black",
     borderWidth: 1,
+  },
+  clickerButtonActive: {
+    boxShadow: "none",
+    transform: [{ translateY: 5 }],
   },
   clickerLeft: {
     borderTopLeftRadius: 5,
@@ -38,22 +49,59 @@ const DistanceInputButton = ({
   handleLongPress,
   handleLongPressOut,
 }: DistanceInputButtonType) => {
+  const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
+
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[
+        styles.container,
+        isPressed === "left"
+          ? styles.containerActiveLeft
+          : isPressed === "right"
+          ? styles.containerActiveRight
+          : null,
+      ]}
+    >
       <Pressable
-        style={[styles.clickerLeft, styles.clickerButton]}
-        onPress={() => handleClick("left")}
-        onLongPress={() => handleLongPress("left")}
-        onPressOut={handleLongPressOut}
+        style={[
+          styles.clickerLeft,
+          styles.clickerButton,
+          isPressed === "left" && styles.clickerButtonActive,
+        ]}
+        onPress={() => {
+          setIsPressed("left");
+          handleClick("left");
+        }}
+        onLongPress={() => {
+          setIsPressed("left");
+          handleLongPress("left");
+        }}
+        onPressOut={() => {
+          setIsPressed(null);
+          handleLongPressOut();
+        }}
         delayLongPress={200}
       >
         <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
       </Pressable>
       <Pressable
-        style={[styles.clickerRight, styles.clickerButton]}
-        onPress={() => handleClick("right")}
-        onLongPress={() => handleLongPress("right")}
-        onPressOut={handleLongPressOut}
+        style={[
+          styles.clickerRight,
+          styles.clickerButton,
+          isPressed === "right" && styles.clickerButtonActive,
+        ]}
+        onPress={() => {
+          setIsPressed("right");
+          handleClick("right");
+        }}
+        onLongPress={() => {
+          setIsPressed("right");
+          handleLongPress("right");
+        }}
+        onPressOut={() => {
+          setIsPressed(null);
+          handleLongPressOut();
+        }}
         delayLongPress={200}
       >
         <FontAwesome name="caret-right" size={40} color={colors.lightGray} />
