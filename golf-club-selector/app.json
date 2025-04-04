@@ -47,6 +47,12 @@
             "./assets/fonts/Hind-SemiBold.ttf"
           ]
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow ClubCaddy to use your location."
+        }
       ]
     ],
     "experiments": {
