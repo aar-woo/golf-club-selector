@@ -9,32 +9,33 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 60,
-  },
-  containerActiveLeft: {
-    transform: [{ rotate: "-1deg" }],
-  },
-  containerActiveRight: {
-    transform: [{ rotate: "1deg" }],
+    boxShadow: "0 8.5 2 0.7 black",
   },
   clickerButton: {
     width: 100,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.gray,
-    boxShadow: "0 5px black",
     borderWidth: 1,
+    shadowColor: "black",
+    shadowRadius: 1,
+    shadowOpacity: 1,
   },
   clickerButtonActive: {
-    boxShadow: "none",
+    shadowOpacity: 0,
     transform: [{ translateY: 5 }],
   },
   clickerLeft: {
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
+    transform: [{ skewY: "4deg" }],
+    shadowOffset: { width: -0.5, height: 5.3 },
   },
   clickerRight: {
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
+    transform: [{ skewY: "-4deg" }],
+    shadowOffset: { width: 0.5, height: 5.3 },
   },
 });
 
@@ -52,16 +53,7 @@ const DistanceInputButton = ({
   const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
 
   return (
-    <View
-      style={[
-        styles.container,
-        isPressed === "left"
-          ? styles.containerActiveLeft
-          : isPressed === "right"
-          ? styles.containerActiveRight
-          : null,
-      ]}
-    >
+    <View style={[styles.container]}>
       <Pressable
         style={[
           styles.clickerLeft,
