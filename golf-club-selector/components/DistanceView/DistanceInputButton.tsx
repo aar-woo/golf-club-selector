@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 60,
-    boxShadow: `0 8.5 0 0.8 ${colors.darkGray}`,
+    boxShadow: `0 12 0 0.8 ${colors.darkGray}`,
   },
   clickerButton: {
     width: 100,
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     transform: [{ skewY: "4deg" }],
-    shadowOffset: { width: -0.5, height: 5.8 },
+    shadowOffset: { width: -0.5, height: 7 },
   },
   clickerRight: {
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
     transform: [{ skewY: "-4deg" }],
-    shadowOffset: { width: 0.5, height: 5.8 },
+    shadowOffset: { width: 0.5, height: 7 },
   },
 });
 
@@ -60,7 +60,11 @@ const DistanceInputButton = ({
         style={[
           styles.clickerLeft,
           styles.clickerButton,
-          isPressed === "left" && styles.clickerButtonActive,
+          isPressed === "left"
+            ? styles.clickerButtonActive
+            : isPressed === "right"
+            ? { transform: [{ skewY: "6.5deg" }] }
+            : null,
         ]}
         onPress={() => {
           setIsPressed("left");
@@ -74,7 +78,7 @@ const DistanceInputButton = ({
           setIsPressed(null);
           handleLongPressOut();
         }}
-        delayLongPress={200}
+        delayLongPress={100}
       >
         <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
       </Pressable>
@@ -82,7 +86,11 @@ const DistanceInputButton = ({
         style={[
           styles.clickerRight,
           styles.clickerButton,
-          isPressed === "right" && styles.clickerButtonActive,
+          isPressed === "right"
+            ? styles.clickerButtonActive
+            : isPressed === "left"
+            ? { transform: [{ skewY: "-6.5deg" }] }
+            : null,
         ]}
         onPress={() => {
           setIsPressed("right");
