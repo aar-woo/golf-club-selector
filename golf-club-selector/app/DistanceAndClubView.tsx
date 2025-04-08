@@ -37,13 +37,13 @@ const DistanceAndClubView = () => {
           }
           tempDistanceRef.current = Math.max(0, tempDistanceRef.current - 1);
           setDisplayDistance(tempDistanceRef.current);
-        }, 20);
+        }, 40);
         break;
       case "right":
         counterRef.current = setInterval(() => {
           tempDistanceRef.current = tempDistanceRef.current + 1;
           setDisplayDistance(tempDistanceRef.current);
-        }, 20);
+        }, 40);
     }
   };
 
