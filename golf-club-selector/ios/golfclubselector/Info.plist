@@ -86,5 +86,11 @@
 		<string>Hind-SemiBold.ttf</string>
 		<string>Montserrat-SemiBold.ttf</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to calculate distances on the golf course.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need access to your location even when the app is in the background.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses your location for accurate golf course distances.</string>
 </dict>
 </plist>
