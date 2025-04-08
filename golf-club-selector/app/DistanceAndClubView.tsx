@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { View } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
-import * as Location from "expo-location";
 
 const DistanceAndClubView = () => {
   const [distance, setDistance] = useState<number>(100);
@@ -54,27 +53,6 @@ const DistanceAndClubView = () => {
       setDisplayDistance(tempDistanceRef.current);
     }
   };
-
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function getCurrentLocation() {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      console.log("location: ", location);
-      setLocation(location);
-    }
-
-    getCurrentLocation();
-  }, []);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
