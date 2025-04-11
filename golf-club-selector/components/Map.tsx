@@ -42,7 +42,7 @@ const Map = () => {
     location: Location.LocationObject
   ) => {
     let distance = getDistance(marker, location.coords);
-    distance = convertDistance(distance, "yd");
+    distance = Math.round(convertDistance(distance, "yd"));
     return distance;
   };
 
@@ -103,23 +103,52 @@ const Map = () => {
             name="golf-ball-tee"
             size={24}
             color={colors.lightBlue}
-        />
-        {marker && location && (
-          <Polyline
-            coordinates={[
-              {
-                latitude: marker?.latitude,
-                longitude: marker?.longitude,
-              },
-              {
-                latitude: location?.coords.latitude,
-                longitude: location?.coords.longitude,
-              },
-            ]}
-            strokeColor={colors.gray}
-            strokeWidth={1}
-            lineDashPattern={[3, 3]}
           />
+        </Marker>
+        {marker && location && (
+          <View>
+            <Polyline
+              coordinates={[
+                {
+                  latitude: marker?.latitude,
+                  longitude: marker?.longitude,
+                },
+                {
+                  latitude: location?.coords.latitude,
+                  longitude: location?.coords.longitude,
+                },
+              ]}
+              strokeColor={colors.gray}
+              strokeWidth={1}
+              lineDashPattern={[3, 3]}
+            />
+            <Marker
+              coordinate={{
+                latitude: (marker.latitude + location.coords.latitude) / 2,
+                longitude: (marker.longitude + location.coords.longitude) / 2,
+              }}
+              anchor={{ x: 0.5, y: 0.5 }}
+            >
+              <View
+                style={{
+                  backgroundColor: colors.primaryBlue,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                  borderRadius: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {distanceBetweenMarkers} yd
+                </Text>
+              </View>
+            </Marker>
+          </View>
         )}
       </MapView>
     </View>
