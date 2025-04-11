@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { View } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
-
+import getDistance from "geolib/es/getDistance";
+import convertDistance from "geolib/es/convertDistance";
 const Map = () => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
@@ -12,6 +13,8 @@ const Map = () => {
     latitude: number;
     longitude: number;
   } | null>(null);
+  const [distanceBetweenMarkers, setDistanceBetweenMarkers] =
+    useState<number>(0);
 
   async function getCurrentLocation() {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -27,6 +30,26 @@ const Map = () => {
   useEffect(() => {
     getCurrentLocation();
   }, []);
+
+  const calculateDistance = (
+    marker: {
+      latitude: number;
+      longitude: number;
+    },
+    location: Location.LocationObject
+  ) => {
+    let distance = getDistance(marker, location.coords);
+    distance = convertDistance(distance, "yd");
+    console.log("distance: ", distance);
+    return distance;
+  };
+
+  useEffect(() => {
+    if (marker && location) {
+      const distance = calculateDistance(marker, location);
+      setDistanceBetweenMarkers(distance);
+    }
+  }, [marker, location]);
 
   return (
     <View>
