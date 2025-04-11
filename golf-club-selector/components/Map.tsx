@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { View } from "react-native";
-import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
 import convertDistance from "geolib/es/convertDistance";
+import colors from "@/consts/colors";
+
 const Map = () => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
@@ -40,7 +42,6 @@ const Map = () => {
   ) => {
     let distance = getDistance(marker, location.coords);
     distance = convertDistance(distance, "yd");
-    console.log("distance: ", distance);
     return distance;
   };
 
@@ -88,6 +89,23 @@ const Map = () => {
                 }
           }
         />
+        {marker && location && (
+          <Polyline
+            coordinates={[
+              {
+                latitude: marker?.latitude,
+                longitude: marker?.longitude,
+              },
+              {
+                latitude: location?.coords.latitude,
+                longitude: location?.coords.longitude,
+              },
+            ]}
+            strokeColor={colors.gray}
+            strokeWidth={1}
+            lineDashPattern={[3, 3]}
+          />
+        )}
       </MapView>
     </View>
   );
