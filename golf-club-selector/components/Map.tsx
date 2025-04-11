@@ -8,6 +8,10 @@ const Map = () => {
     null
   );
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [marker, setMarker] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   async function getCurrentLocation() {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -42,7 +46,12 @@ const Map = () => {
             longitudeDelta: 0.0008,
           }
         }
+        onPress={(e) => {
+          const { latitude, longitude } = e.nativeEvent.coordinate;
+          setMarker({ latitude, longitude });
+        }}
       >
+        {marker && <Marker coordinate={marker} />}
         <Marker
           coordinate={
             location?.coords
