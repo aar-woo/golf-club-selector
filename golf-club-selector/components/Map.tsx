@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
 import convertDistance from "geolib/es/convertDistance";
 import colors from "@/consts/colors";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const Map = () => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -75,7 +76,15 @@ const Map = () => {
           setMarker({ latitude, longitude });
         }}
       >
-        {marker && <Marker coordinate={marker} />}
+        {marker && (
+          <Marker coordinate={marker}>
+            <FontAwesome6
+              name="location-crosshairs"
+              size={24}
+              color={colors.lightBlue}
+            />
+          </Marker>
+        )}
         <Marker
           coordinate={
             location?.coords
@@ -88,6 +97,12 @@ const Map = () => {
                   longitude: 0,
                 }
           }
+          centerOffset={{ x: 0, y: -9 }}
+        >
+          <FontAwesome6
+            name="golf-ball-tee"
+            size={24}
+            color={colors.lightBlue}
         />
         {marker && location && (
           <Polyline
