@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import { View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "@/consts/colors";
-import DistanceAndClubView from "./DistanceAndClubView";
+import DistanceAndClubView from "@/app/DistanceAndClubView";
 import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
 
@@ -31,7 +31,14 @@ export default function Index() {
         style={styles.background}
       />
       <Header />
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 50,
+        }}
+      >
         <Map />
         <DistanceAndClubView />
       </View>
