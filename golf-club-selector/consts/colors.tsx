@@ -10,6 +10,8 @@ const colors: Colors = {
   snowWhite: "#FFFBFC",
   primaryBlue: "#044B7F",
   lightBlue: "#1F68A1",
+  darkBlue: "020122",
+  warmGray: "#615A56",
 };
 
 export default colors;

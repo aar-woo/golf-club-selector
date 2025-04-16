@@ -5,7 +5,7 @@ import colors from "@/consts/colors";
 import DistanceAndClubView from "@/app/DistanceAndClubView";
 import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
-
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Index() {
+  const tabBarHeight = useBottomTabBarHeight();
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -35,7 +37,8 @@ export default function Index() {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: 50,
+          paddingBottom: tabBarHeight,
+          marginBottom: 40,
         }}
       >
         <Map />
