@@ -2,6 +2,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
 import { Tabs } from "expo-router";
 import { StyleSheet, View } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,9 +34,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="mapView"
         options={{
-          title: "Map View",
+          title: "Map",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <Ionicons name="golf" size={24} color={color} />
           ),
         }}
       />
