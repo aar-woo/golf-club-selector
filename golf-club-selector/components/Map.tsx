@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
@@ -53,15 +53,24 @@ const Map = () => {
     }
   }, [marker, location]);
 
+  const styles = StyleSheet.create({
+    mapContainer: {
+      backgroundColor: "#8f8f8f",
+      borderRadius: 15,
+      padding: 8,
+    },
+  });
+
   return (
-    <View>
+    <View style={styles.mapContainer}>
       <MapView
         provider={PROVIDER_DEFAULT}
         style={{
           height: 250,
-          width: 350,
+          width: 340,
           justifyContent: "flex-end",
           alignItems: "center",
+          borderRadius: 15,
         }}
         region={
           location?.coords && {

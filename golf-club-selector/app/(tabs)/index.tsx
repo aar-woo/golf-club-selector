@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: colors.lightGray,
   },
+  appContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.lightGray,
+    borderRadius: 15,
+  },
   background: {
     position: "absolute",
     left: 0,
@@ -32,14 +39,7 @@ export default function Index() {
         style={styles.background}
       />
       <Header />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          paddingBottom: tabBarHeight,
-        }}
-      >
+      <View style={{ ...styles.appContainer, marginBottom: tabBarHeight }}>
         <Map />
         <DistanceAndClubView />
       </View>
