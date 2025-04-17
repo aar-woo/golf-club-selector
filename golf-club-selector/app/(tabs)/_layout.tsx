@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@/consts/colors";
 import { BlurView } from "expo-blur";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const styles = StyleSheet.create({
   tabBar: { position: "absolute", borderTopWidth: 0, bottom: 6 },
@@ -42,7 +43,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <MaterialCommunityIcons name="golf-cart" size={24} color={color} />
           ),
           tabBarItemStyle: {
             ...styles.tabBarItem,
