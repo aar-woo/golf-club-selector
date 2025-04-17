@@ -38,7 +38,6 @@ export default function Index() {
           justifyContent: "center",
           alignItems: "center",
           paddingBottom: tabBarHeight,
-          marginBottom: 40,
         }}
       >
         <Map />

@@ -5,15 +5,18 @@ import colors from "@/consts/colors";
 const styles = StyleSheet.create({
   container: {
     height: 200,
-    justifyContent: "space-around",
   },
+
   distanceDisplay: {
     justifyContent: "center",
     alignItems: "center",
   },
   distanceText: {
-    height: 100,
-    fontSize: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    lineHeight: 80,
+    fontSize: 80,
     color: colors.primaryBlue,
   },
 });
@@ -38,7 +41,7 @@ const DistanceView = ({
         <Text
           style={{
             fontSize: 20,
-            marginBottom: 20,
+            marginBottom: 10,
             fontFamily: "Hind-SemiBold",
             color: colors.lightBlue,
           }}

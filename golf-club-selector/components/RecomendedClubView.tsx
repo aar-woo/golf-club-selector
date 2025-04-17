@@ -18,14 +18,14 @@ const styles = StyleSheet.create({
 
   textContainer: {
     position: "absolute",
-    fontSize: 30,
+    fontSize: 24,
     fontFamily: "Montserrat-SemiBold",
     color: colors.primaryBlue,
   },
 
   img: {
-    height: 160,
-    width: 160,
+    height: 130,
+    width: 130,
     resizeMode: "contain",
   },
 });
