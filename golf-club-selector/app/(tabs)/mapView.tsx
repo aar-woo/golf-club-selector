@@ -1,13 +1,11 @@
 import Header from "@/components/Header";
-import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import Map from "@/components/Map";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.lightGray,
   },
@@ -23,20 +21,15 @@ const styles = StyleSheet.create({
 export default function MapView() {
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["transparent", "rgba(138, 138, 138, 0.8)"]}
-        style={styles.background}
-      />
-      <Header />
+      <Header styleOverride={{ position: "absolute", top: 0 }} />
       <View
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: 50,
         }}
       >
-        <Map />
+        <Map fullScreen={true} />
       </View>
     </View>
   );

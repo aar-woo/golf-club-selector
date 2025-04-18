@@ -11,9 +11,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export function Header() {
+interface HeaderProps {
+  styleOverride?: {};
+}
+
+export function Header({ styleOverride }: HeaderProps) {
   return (
-    <View>
+    <View style={{ zIndex: 2, ...styleOverride }}>
       <Text style={styles.title}>ClubCaddy</Text>
     </View>
   );

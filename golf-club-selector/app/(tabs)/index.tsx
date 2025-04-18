@@ -6,6 +6,7 @@ import DistanceAndClubView from "@/app/DistanceAndClubView";
 import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
