@@ -25,6 +25,7 @@ type DistanceViewType = {
   distance: number;
   onClickChange: (direction: "left" | "right") => void;
   onLongPress: (direction: "left" | "right") => void;
+  onDragRelease: (direction: "left" | "right") => void;
   onLongPressOut: () => void;
 };
 
@@ -33,6 +34,7 @@ const DistanceView = ({
   onClickChange,
   onLongPress,
   onLongPressOut,
+  onDragRelease,
 }: DistanceViewType) => {
   return (
     <View style={styles.container}>
@@ -53,6 +55,7 @@ const DistanceView = ({
         handleClick={onClickChange}
         handleLongPress={onLongPress}
         handleLongPressOut={onLongPressOut}
+        handleDragRelease={onDragRelease}
       />
     </View>
   );

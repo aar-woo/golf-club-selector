@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 type DistanceInputButtonType = {
   handleClick: (direction: "left" | "right") => void;
   handleLongPress: (direction: "left" | "right") => void;
+  handleDragRelease: (direction: "left" | "right") => void;
   handleLongPressOut: () => void;
 };
 
@@ -65,6 +66,7 @@ const DistanceInputButton = ({
   handleClick,
   handleLongPress,
   handleLongPressOut,
+  handleDragRelease,
 }: DistanceInputButtonType) => {
   const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
@@ -99,6 +101,7 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
+      handleDragRelease("right");
       setTimeout(() => {
         setIsDraggingRight(false);
       }, 200);
@@ -132,6 +135,7 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
+      handleDragRelease("left");
       setTimeout(() => {
         setIsDraggingLeft(false);
       }, 200);
