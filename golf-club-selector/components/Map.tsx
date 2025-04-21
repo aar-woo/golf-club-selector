@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
@@ -7,7 +7,24 @@ import convertDistance from "geolib/es/convertDistance";
 import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-const Map = () => {
+interface MapProps {
+  width?: number;
+  height?: number;
+  fullScreen?: boolean;
+}
+
+const styles = StyleSheet.create({
+  mapContainer: {
+    backgroundColor: "#8f8f8f",
+    borderRadius: 15,
+  },
+  map: {
+    alignItems: "center",
+    borderRadius: 15,
+  },
+});
+
+const Map = ({ width = 340, height = 250, fullScreen = false }: MapProps) => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
@@ -18,6 +35,8 @@ const Map = () => {
   } | null>(null);
   const [distanceBetweenMarkers, setDistanceBetweenMarkers] =
     useState<number>(0);
+  const deviceHeight = Dimensions.get("window").height;
+  const deviceWidth = Dimensions.get("window").width;
 
   async function getCurrentLocation() {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -54,21 +73,25 @@ const Map = () => {
   }, [marker, location]);
 
   return (
-    <View>
+    <View
+      style={{
+        ...styles.mapContainer,
+        padding: fullScreen ? 0 : 8,
+      }}
+    >
       <MapView
         provider={PROVIDER_DEFAULT}
         style={{
-          height: 250,
-          width: 350,
-          justifyContent: "flex-end",
-          alignItems: "center",
+          ...styles.map,
+          height: fullScreen ? deviceHeight : height,
+          width: fullScreen ? deviceWidth : width,
         }}
         region={
           location?.coords && {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
-            latitudeDelta: 0.0008,
-            longitudeDelta: 0.0008,
+            latitudeDelta: 0.0015,
+            longitudeDelta: 0.0015,
           }
         }
         onPress={(e) => {

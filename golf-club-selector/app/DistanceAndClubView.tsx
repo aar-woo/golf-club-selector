@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
 
@@ -8,6 +8,14 @@ const DistanceAndClubView = () => {
   const [displayDistance, setDisplayDistance] = useState(distance);
   const tempDistanceRef = useRef<number>(distance);
   const counterRef = useRef<NodeJS.Timeout | null>(null);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  });
 
   const handleClickChange = (direction: "left" | "right") => {
     switch (direction) {
@@ -55,7 +63,7 @@ const DistanceAndClubView = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={styles.container}>
       <RecommendedClubView distance={distance} />
       <DistanceView
         distance={displayDistance}
