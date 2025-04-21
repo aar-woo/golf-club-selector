@@ -96,12 +96,12 @@ const DistanceInputButton = ({
         }
       )(e, gestureState);
     },
-    onPanResponderRelease: () => {
+    onPanResponderRelease: (e, gestureState) => {
       Animated.spring(panRight, {
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      handleDragRelease("right");
+      if (gestureState.dx > 16) handleDragRelease("right");
       setTimeout(() => {
         setIsDraggingRight(false);
       }, 200);
@@ -130,12 +130,13 @@ const DistanceInputButton = ({
         }
       )(e, gestureState);
     },
-    onPanResponderRelease: () => {
+    onPanResponderRelease: (e, gestureState) => {
       Animated.spring(panLeft, {
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      handleDragRelease("left");
+      if (gestureState.dx < -16) handleDragRelease("left");
+
       setTimeout(() => {
         setIsDraggingLeft(false);
       }, 200);

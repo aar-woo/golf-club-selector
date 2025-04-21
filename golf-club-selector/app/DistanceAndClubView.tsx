@@ -65,7 +65,10 @@ const DistanceAndClubView = () => {
   const handleDragRelease = (direction: "left" | "right") => {
     switch (direction) {
       case "left":
-        if (distance === 0) {
+        if (distance <= 0 || distance <= 100) {
+          setDistance(0);
+          tempDistanceRef.current = 0;
+          setDisplayDistance(0);
           return;
         }
         setDistance(distance - 100);
