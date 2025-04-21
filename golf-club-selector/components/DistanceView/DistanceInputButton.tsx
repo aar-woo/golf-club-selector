@@ -81,7 +81,7 @@ const DistanceInputButton = ({
     },
     onPanResponderMove: (e, gestureState) => {
       setIsDraggingRight(true);
-      gestureState.dx = Math.max(0, Math.min(18, gestureState.dx));
+      gestureState.dx = Math.max(0, Math.min(20, gestureState.dx));
       Animated.event(
         [
           null,
@@ -99,7 +99,9 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      setIsDraggingRight(false);
+      setTimeout(() => {
+        setIsDraggingRight(false);
+      }, 200);
     },
   });
 
@@ -111,7 +113,7 @@ const DistanceInputButton = ({
     },
     onPanResponderMove: (e, gestureState) => {
       setIsDraggingLeft(true);
-      gestureState.dx = Math.min(0, Math.max(-18, gestureState.dx));
+      gestureState.dx = Math.min(0, Math.max(-20, gestureState.dx));
 
       Animated.event(
         [
@@ -130,7 +132,9 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      setIsDraggingLeft(false);
+      setTimeout(() => {
+        setIsDraggingLeft(false);
+      }, 200);
     },
   });
 
@@ -144,9 +148,14 @@ const DistanceInputButton = ({
           isPressed === "left" || isDraggingLeft
             ? styles.clickerButtonActive
             : isPressed === "right" || isDraggingRight
-            ? { transform: [{ skewY: "6.5deg" }] }
+            ? { transform: [{ skewY: "6.5deg" }], zIndex: 2 }
             : null,
           panLeft.getLayout(),
+          isDraggingLeft
+            ? {
+                boxShadow: `21px 0px 0px 0px ${colors.darkGray}`,
+              }
+            : null,
         ]}
       >
         <Pressable
@@ -179,6 +188,11 @@ const DistanceInputButton = ({
             ? { transform: [{ skewY: "-6.5deg" }] }
             : null,
           panRight.getLayout(),
+          isDraggingRight
+            ? {
+                boxShadow: `-20px 0px 0px 0px ${colors.darkGray}`,
+              }
+            : null,
         ]}
       >
         <Pressable
