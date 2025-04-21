@@ -67,18 +67,21 @@ const DistanceInputButton = ({
   handleLongPressOut,
 }: DistanceInputButtonType) => {
   const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDraggingLeft, setIsDraggingLeft] = useState(false);
+  const [isDraggingRight, setIsDraggingRight] = useState(false);
+
   const panRight = useRef(new Animated.ValueXY()).current;
   const panLeft = useRef(new Animated.ValueXY()).current;
 
   const panResponderRight = PanResponder.create({
-    onStartShouldSetPanResponder: () => isDragging,
+    onStartShouldSetPanResponder: () => isDraggingRight,
     onMoveShouldSetPanResponder: () => {
-      setIsDragging(true);
+      setIsDraggingRight(true);
       return true;
     },
     onPanResponderMove: (e, gestureState) => {
-      setIsDragging(true);
+      setIsDraggingRight(true);
+      gestureState.dx = Math.max(0, Math.min(18, gestureState.dx));
       Animated.event(
         [
           null,
@@ -96,18 +99,20 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      setIsDragging(false);
+      setIsDraggingRight(false);
     },
   });
 
   const panResponderLeft = PanResponder.create({
-    onStartShouldSetPanResponder: () => isDragging,
+    onStartShouldSetPanResponder: () => isDraggingLeft,
     onMoveShouldSetPanResponder: () => {
-      setIsDragging(true);
+      setIsDraggingLeft(true);
       return true;
     },
     onPanResponderMove: (e, gestureState) => {
-      setIsDragging(true);
+      setIsDraggingLeft(true);
+      gestureState.dx = Math.min(0, Math.max(-18, gestureState.dx));
+
       Animated.event(
         [
           null,
@@ -125,7 +130,7 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      setIsDragging(false);
+      setIsDraggingLeft(false);
     },
   });
 
@@ -136,9 +141,9 @@ const DistanceInputButton = ({
         style={[
           styles.clickerLeft,
           styles.clickerButton,
-          isPressed === "left"
+          isPressed === "left" || isDraggingLeft
             ? styles.clickerButtonActive
-            : isPressed === "right"
+            : isPressed === "right" || isDraggingRight
             ? { transform: [{ skewY: "6.5deg" }] }
             : null,
           panLeft.getLayout(),
@@ -168,9 +173,9 @@ const DistanceInputButton = ({
         style={[
           styles.clickerRight,
           styles.clickerButton,
-          isPressed === "right"
+          isPressed === "right" || isDraggingRight
             ? styles.clickerButtonActive
-            : isPressed === "left"
+            : isPressed === "left" || isDraggingLeft
             ? { transform: [{ skewY: "-6.5deg" }] }
             : null,
           panRight.getLayout(),
