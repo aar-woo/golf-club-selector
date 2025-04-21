@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
     transform: [{ skewY: "-4deg" }],
     shadowOffset: { width: 0.5, height: 7 },
   },
-  box: {
-    backgroundColor: "#61dafb",
-    width: 80,
-    height: 80,
-    borderRadius: 4,
+  pressable: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
   },
 });
 
@@ -67,9 +68,10 @@ const DistanceInputButton = ({
 }: DistanceInputButtonType) => {
   const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const pan = useRef(new Animated.ValueXY()).current;
+  const panRight = useRef(new Animated.ValueXY()).current;
+  const panLeft = useRef(new Animated.ValueXY()).current;
 
-  const panResponder = PanResponder.create({
+  const panResponderRight = PanResponder.create({
     onStartShouldSetPanResponder: () => isDragging,
     onMoveShouldSetPanResponder: () => {
       setIsDragging(true);
@@ -81,7 +83,7 @@ const DistanceInputButton = ({
         [
           null,
           {
-            dx: pan.x,
+            dx: panRight.x,
           },
         ],
         {
@@ -90,7 +92,36 @@ const DistanceInputButton = ({
       )(e, gestureState);
     },
     onPanResponderRelease: () => {
-      Animated.spring(pan, {
+      Animated.spring(panRight, {
+        toValue: { x: 0, y: 0 },
+        useNativeDriver: false,
+      }).start();
+      setIsDragging(false);
+    },
+  });
+
+  const panResponderLeft = PanResponder.create({
+    onStartShouldSetPanResponder: () => isDragging,
+    onMoveShouldSetPanResponder: () => {
+      setIsDragging(true);
+      return true;
+    },
+    onPanResponderMove: (e, gestureState) => {
+      setIsDragging(true);
+      Animated.event(
+        [
+          null,
+          {
+            dx: panLeft.x,
+          },
+        ],
+        {
+          useNativeDriver: false,
+        }
+      )(e, gestureState);
+    },
+    onPanResponderRelease: () => {
+      Animated.spring(panLeft, {
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
@@ -100,7 +131,8 @@ const DistanceInputButton = ({
 
   return (
     <View style={[styles.container]}>
-      <Pressable
+      <Animated.View
+        {...panResponderLeft.panHandlers}
         style={[
           styles.clickerLeft,
           styles.clickerButton,
@@ -109,25 +141,30 @@ const DistanceInputButton = ({
             : isPressed === "right"
             ? { transform: [{ skewY: "6.5deg" }] }
             : null,
+          panLeft.getLayout(),
         ]}
-        onPress={() => {
-          setIsPressed("left");
-          handleClick("left");
-        }}
-        onLongPress={() => {
-          setIsPressed("left");
-          handleLongPress("left");
-        }}
-        onPressOut={() => {
-          setIsPressed(null);
-          handleLongPressOut();
-        }}
-        delayLongPress={100}
       >
-        <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
-      </Pressable>
+        <Pressable
+          style={styles.pressable}
+          onPress={() => {
+            setIsPressed("left");
+            handleClick("left");
+          }}
+          onLongPress={() => {
+            setIsPressed("left");
+            handleLongPress("left");
+          }}
+          onPressOut={() => {
+            setIsPressed(null);
+            handleLongPressOut();
+          }}
+          delayLongPress={100}
+        >
+          <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
+        </Pressable>
+      </Animated.View>
       <Animated.View
-        {...panResponder.panHandlers}
+        {...panResponderRight.panHandlers}
         style={[
           styles.clickerRight,
           styles.clickerButton,
@@ -136,22 +173,11 @@ const DistanceInputButton = ({
             : isPressed === "left"
             ? { transform: [{ skewY: "-6.5deg" }] }
             : null,
-          pan.getLayout(),
-          // {
-          //   transform: isDragging
-          //     ? [{ translateX: pan.x }]
-          //     : [{ skewY: "-4deg" }],
-          // },
+          panRight.getLayout(),
         ]}
       >
         <Pressable
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
+          style={styles.pressable}
           onPress={() => {
             setIsPressed("right");
             handleClick("right");
