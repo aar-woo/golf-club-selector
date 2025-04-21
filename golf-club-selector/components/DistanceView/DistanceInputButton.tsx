@@ -1,6 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Animated,
+  PanResponder,
+} from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import colors from "@/consts/colors";
 
@@ -39,6 +46,12 @@ const styles = StyleSheet.create({
     transform: [{ skewY: "-4deg" }],
     shadowOffset: { width: 0.5, height: 7 },
   },
+  box: {
+    backgroundColor: "#61dafb",
+    width: 80,
+    height: 80,
+    borderRadius: 4,
+  },
 });
 
 type DistanceInputButtonType = {
@@ -53,6 +66,37 @@ const DistanceInputButton = ({
   handleLongPressOut,
 }: DistanceInputButtonType) => {
   const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const pan = useRef(new Animated.ValueXY()).current;
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => isDragging,
+    onMoveShouldSetPanResponder: () => {
+      setIsDragging(true);
+      return true;
+    },
+    onPanResponderMove: (e, gestureState) => {
+      setIsDragging(true);
+      Animated.event(
+        [
+          null,
+          {
+            dx: pan.x,
+          },
+        ],
+        {
+          useNativeDriver: false,
+        }
+      )(e, gestureState);
+    },
+    onPanResponderRelease: () => {
+      Animated.spring(pan, {
+        toValue: { x: 0, y: 0 },
+        useNativeDriver: false,
+      }).start();
+      setIsDragging(false);
+    },
+  });
 
   return (
     <View style={[styles.container]}>
@@ -82,7 +126,8 @@ const DistanceInputButton = ({
       >
         <FontAwesome name="caret-left" size={40} color={colors.lightGray} />
       </Pressable>
-      <Pressable
+      <Animated.View
+        {...panResponder.panHandlers}
         style={[
           styles.clickerRight,
           styles.clickerButton,
@@ -91,23 +136,39 @@ const DistanceInputButton = ({
             : isPressed === "left"
             ? { transform: [{ skewY: "-6.5deg" }] }
             : null,
+          pan.getLayout(),
+          // {
+          //   transform: isDragging
+          //     ? [{ translateX: pan.x }]
+          //     : [{ skewY: "-4deg" }],
+          // },
         ]}
-        onPress={() => {
-          setIsPressed("right");
-          handleClick("right");
-        }}
-        onLongPress={() => {
-          setIsPressed("right");
-          handleLongPress("right");
-        }}
-        onPressOut={() => {
-          setIsPressed(null);
-          handleLongPressOut();
-        }}
-        delayLongPress={200}
       >
-        <FontAwesome name="caret-right" size={40} color={colors.lightGray} />
-      </Pressable>
+        <Pressable
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+          onPress={() => {
+            setIsPressed("right");
+            handleClick("right");
+          }}
+          onLongPress={() => {
+            setIsPressed("right");
+            handleLongPress("right");
+          }}
+          onPressOut={() => {
+            setIsPressed(null);
+            handleLongPressOut();
+          }}
+          delayLongPress={200}
+        >
+          <FontAwesome name="caret-right" size={40} color={colors.lightGray} />
+        </Pressable>
+      </Animated.View>
     </View>
   );
 };
