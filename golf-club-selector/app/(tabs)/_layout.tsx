@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   tabBar: { position: "absolute", borderTopWidth: 0, bottom: 6 },
   tabBarItem: {
     position: "relative",
-    top: 16,
+    top: 17,
     overflow: "hidden",
   },
   blurView: {

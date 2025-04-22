@@ -62,6 +62,26 @@ const DistanceAndClubView = () => {
     }
   };
 
+  const handleDragRelease = (direction: "left" | "right") => {
+    switch (direction) {
+      case "left":
+        if (distance <= 0 || distance <= 100) {
+          setDistance(0);
+          tempDistanceRef.current = 0;
+          setDisplayDistance(0);
+          return;
+        }
+        setDistance(distance - 100);
+        tempDistanceRef.current = tempDistanceRef.current - 100;
+        setDisplayDistance(tempDistanceRef.current);
+        break;
+      case "right":
+        setDistance(distance + 100);
+        tempDistanceRef.current = tempDistanceRef.current + 100;
+        setDisplayDistance(tempDistanceRef.current);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <RecommendedClubView distance={distance} />
@@ -70,6 +90,7 @@ const DistanceAndClubView = () => {
         onClickChange={handleClickChange}
         onLongPress={handleLongPressChange}
         onLongPressOut={handleLongPressOut}
+        onDragRelease={handleDragRelease}
       />
     </View>
   );
