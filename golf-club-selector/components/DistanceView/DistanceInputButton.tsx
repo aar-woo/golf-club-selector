@@ -83,7 +83,7 @@ const DistanceInputButton = ({
     },
     onPanResponderMove: (e, gestureState) => {
       setIsDraggingRight(true);
-      gestureState.dx = Math.max(0, Math.min(20, gestureState.dx));
+      gestureState.dx = Math.max(0, Math.min(25, gestureState.dx));
       Animated.event(
         [
           null,
@@ -101,7 +101,7 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      if (gestureState.dx > 16) handleDragRelease("right");
+      if (gestureState.dx > 22) handleDragRelease("right");
       setTimeout(() => {
         setIsDraggingRight(false);
       }, 200);
@@ -116,7 +116,7 @@ const DistanceInputButton = ({
     },
     onPanResponderMove: (e, gestureState) => {
       setIsDraggingLeft(true);
-      gestureState.dx = Math.min(0, Math.max(-20, gestureState.dx));
+      gestureState.dx = Math.min(0, Math.max(-25, gestureState.dx));
 
       Animated.event(
         [
@@ -135,7 +135,7 @@ const DistanceInputButton = ({
         toValue: { x: 0, y: 0 },
         useNativeDriver: false,
       }).start();
-      if (gestureState.dx < -16) handleDragRelease("left");
+      if (gestureState.dx < -22) handleDragRelease("left");
 
       setTimeout(() => {
         setIsDraggingLeft(false);
@@ -158,7 +158,7 @@ const DistanceInputButton = ({
           panLeft.getLayout(),
           isDraggingLeft
             ? {
-                boxShadow: `21px 0px 0px 0px ${colors.darkGray}`,
+                boxShadow: `26px 0px 0px 0px ${colors.darkGray}`,
               }
             : null,
         ]}
@@ -195,7 +195,7 @@ const DistanceInputButton = ({
           panRight.getLayout(),
           isDraggingRight
             ? {
-                boxShadow: `-20px 0px 0px 0px ${colors.darkGray}`,
+                boxShadow: `-25px 0px 0px 0px ${colors.darkGray}`,
               }
             : null,
         ]}
