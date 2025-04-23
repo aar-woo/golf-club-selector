@@ -1,10 +1,7 @@
 import Header from "@/components/Header";
-import { View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
-import DistanceAndClubView from "@/app/DistanceAndClubView";
-import { StyleSheet } from "react-native";
-import Map from "@/components/Map";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const styles = StyleSheet.create({
@@ -12,26 +9,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
     backgroundColor: colors.lightGray,
   },
-  appContainer: {
+  settingsContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: "90%",
     backgroundColor: colors.lightGray,
     borderRadius: 15,
-    width: "90%",
   },
   background: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 0,
-    height: "85%",
+    top: 0,
+    height: "100%",
   },
 });
 
-export default function Index() {
+const Settings = () => {
   const tabBarHeight = useBottomTabBarHeight();
 
   return (
@@ -41,10 +39,11 @@ export default function Index() {
         style={styles.background}
       />
       <Header />
-      <View style={{ ...styles.appContainer, marginBottom: tabBarHeight }}>
-        <Map />
-        <DistanceAndClubView />
+      <View style={[styles.settingsContainer, { marginBottom: tabBarHeight }]}>
+        <Text>Settings</Text>
       </View>
     </View>
   );
-}
+};
+
+export default Settings;

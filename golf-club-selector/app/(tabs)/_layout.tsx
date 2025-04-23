@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@/consts/colors";
 import { BlurView } from "expo-blur";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 const styles = StyleSheet.create({
   tabBar: { position: "absolute", borderTopWidth: 0, bottom: 6 },
@@ -39,11 +40,11 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="mapView"
         options={{
-          title: "Home",
+          title: "Map",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="golf-cart" size={24} color={color} />
+            <Ionicons name="golf" size={24} color={color} />
           ),
           tabBarItemStyle: {
             ...styles.tabBarItem,
@@ -54,11 +55,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="mapView"
+        name="index"
         options={{
-          title: "Map",
+          title: "Home",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="golf" size={24} color={color} />
+            <MaterialCommunityIcons name="golf-cart" size={24} color={color} />
+          ),
+          tabBarItemStyle: {
+            ...styles.tabBarItem,
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => (
+            <Fontisto name="player-settings" size={24} color={color} />
           ),
           tabBarItemStyle: {
             ...styles.tabBarItem,
