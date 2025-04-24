@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import ClubDistanceInput from "@/components/ClubDistanceInput";
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +41,7 @@ const Settings = () => {
       />
       <Header />
       <View style={[styles.settingsContainer, { marginBottom: tabBarHeight }]}>
-        <Text>Settings</Text>
+        <ClubDistanceInput clubType="7 Iron" />
       </View>
     </View>
   );
