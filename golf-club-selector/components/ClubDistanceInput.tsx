@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import { useState } from "react";
@@ -25,21 +25,29 @@ type ClubDistanceInputProps = {
   clubType: string;
 };
 
-const data = [...Array(100).keys()].map((index) => ({
-  value: index,
-  label: index.toString(),
+const distanceChoices = [...Array(45).keys()].map((index) => ({
+  value: index * 5,
+  label: (index * 5).toString(),
 }));
 
 const ClubDistanceInput = ({ clubType }: ClubDistanceInputProps) => {
   const [value, setValue] = useState(0);
+  const [visibleItemCount, setVisibleItemCount] = useState(1);
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{clubType}:</Text>
       <WheelPicker
-        data={data}
+        data={distanceChoices}
         value={value}
-        onValueChanged={({ item: { value } }) => setValue(value)}
+        onValueChanging={() => {
+          setVisibleItemCount(5);
+        }}
+        visibleItemCount={visibleItemCount}
+        onValueChanged={({ item: { value } }) => {
+          setValue(value);
+          setVisibleItemCount(1);
+        }}
       />
     </View>
   );
