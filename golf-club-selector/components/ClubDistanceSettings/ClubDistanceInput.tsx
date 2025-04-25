@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import { useState } from "react";
+import ClubsEnum from "@/consts/ClubsEnum";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,8 +24,9 @@ const styles = StyleSheet.create({
 });
 
 type ClubDistanceInputProps = {
-  clubType: string;
+  clubType: ClubsEnum;
   distance: number;
+  handleClubDistanceChange: (clubType: ClubsEnum, distance: number) => void;
 };
 
 const distanceChoices = [...Array(70).keys()].map((index) => ({
@@ -32,8 +34,11 @@ const distanceChoices = [...Array(70).keys()].map((index) => ({
   label: (index * 5).toString(),
 }));
 
-const ClubDistanceInput = ({ clubType, distance }: ClubDistanceInputProps) => {
-  const [value, setValue] = useState(0);
+const ClubDistanceInput = ({
+  clubType,
+  distance,
+  handleClubDistanceChange,
+}: ClubDistanceInputProps) => {
   const [visibleItemCount, setVisibleItemCount] = useState(1);
 
   return (
@@ -47,8 +52,8 @@ const ClubDistanceInput = ({ clubType, distance }: ClubDistanceInputProps) => {
         }}
         visibleItemCount={visibleItemCount}
         onValueChanged={({ item: { value } }) => {
-          setValue(value);
           setVisibleItemCount(1);
+          handleClubDistanceChange(clubType, value);
         }}
       />
     </View>

@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import ClubDistanceInput from "./ClubDistanceInput";
 import ClubsEnum from "@/consts/ClubsEnum";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-
 const styles = StyleSheet.create({
   distancesContainer: {
     width: "100%",
@@ -38,6 +37,12 @@ const ClubDistances = () => {
     [ClubsEnum.PUTTER]: 0,
   });
 
+  const handleClubDistanceChange = (clubType: ClubsEnum, distance: number) => {
+    setClubDistances((prev) => {
+      return { ...prev, [clubType]: distance };
+    });
+  };
+
   return (
     <View style={[styles.distancesContainer, { marginBottom: tabBarHeight }]}>
       {Object.values(ClubsEnum).map((club) => {
@@ -50,6 +55,7 @@ const ClubDistances = () => {
             <ClubDistanceInput
               clubType={displayName}
               distance={clubDistances[club]}
+              handleClubDistanceChange={handleClubDistanceChange}
             />
           </View>
         );
