@@ -24,14 +24,15 @@ const styles = StyleSheet.create({
 
 type ClubDistanceInputProps = {
   clubType: string;
+  distance: number;
 };
 
-const distanceChoices = [...Array(45).keys()].map((index) => ({
+const distanceChoices = [...Array(70).keys()].map((index) => ({
   value: index * 5,
   label: (index * 5).toString(),
 }));
 
-const ClubDistanceInput = ({ clubType }: ClubDistanceInputProps) => {
+const ClubDistanceInput = ({ clubType, distance }: ClubDistanceInputProps) => {
   const [value, setValue] = useState(0);
   const [visibleItemCount, setVisibleItemCount] = useState(1);
 
@@ -40,7 +41,7 @@ const ClubDistanceInput = ({ clubType }: ClubDistanceInputProps) => {
       <Text style={styles.label}>{clubType}:</Text>
       <WheelPicker
         data={distanceChoices}
-        value={value}
+        value={distance}
         onValueChanging={() => {
           setVisibleItemCount(3);
         }}
