@@ -2,14 +2,15 @@ import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import { useState } from "react";
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
-    width: 120,
-    height: 70,
+    justifyContent: "space-between",
+    width: 140,
+    height: 60,
     borderWidth: 3,
     borderColor: colors.primaryGreen,
     borderRadius: 10,
@@ -41,7 +42,7 @@ const ClubDistanceInput = ({ clubType }: ClubDistanceInputProps) => {
         data={distanceChoices}
         value={value}
         onValueChanging={() => {
-          setVisibleItemCount(5);
+          setVisibleItemCount(3);
         }}
         visibleItemCount={visibleItemCount}
         onValueChanged={({ item: { value } }) => {
