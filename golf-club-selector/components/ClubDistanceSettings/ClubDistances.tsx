@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import ClubDistanceInput from "./ClubDistanceInput";
 import ClubsEnum from "@/consts/ClubsEnum";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const styles = StyleSheet.create({
   distancesContainer: {
     width: "100%",
@@ -37,11 +39,54 @@ const ClubDistances = () => {
     [ClubsEnum.PUTTER]: 0,
   });
 
+  const storeClubDistances = async (value: ClubDistancesData) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("my-key", jsonValue);
+    } catch (e) {
+      console.error("Error storing club distance data: ", e);
+    }
+  };
+
+  const getClubDistances = async () => {
+    try {
+      const value = await AsyncStorage.getItem("my-key");
+      if (value !== null) {
+        return JSON.parse(value);
+      }
+    } catch (e) {
+      console.error("Error fetching stored club distance data: ", e);
+    }
+  };
+
   const handleClubDistanceChange = (clubType: ClubsEnum, distance: number) => {
     setClubDistances((prev) => {
       return { ...prev, [clubType]: distance };
     });
   };
+
+  useEffect(() => {
+    const fetchStoredClubData = async () => {
+      try {
+        const clubDistanceStoredData = await getClubDistances();
+        if (!clubDistanceStoredData) {
+          setClubDistances(clubDistances);
+        } else {
+          setClubDistances(clubDistanceStoredData);
+        }
+      } catch (e) {
+        console.error("Error fetching stored club distance data: ", e);
+      }
+    };
+    fetchStoredClubData();
+  }, []);
+
+  useEffect(() => {
+    const storeClubDistancesData = async () => {
+      await storeClubDistances(clubDistances);
+    };
+    storeClubDistancesData();
+  }, [clubDistances]);
 
   return (
     <View style={[styles.distancesContainer, { marginBottom: tabBarHeight }]}>
@@ -60,6 +105,7 @@ const ClubDistances = () => {
           </View>
         );
       })}
+      <Button title="Get Data" onPress={async () => await getClubDistances()} />
     </View>
   );
 };
