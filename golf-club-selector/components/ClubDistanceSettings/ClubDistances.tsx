@@ -42,7 +42,7 @@ const ClubDistances = () => {
   const storeClubDistances = async (value: ClubDistancesData) => {
     try {
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("my-key", jsonValue);
+      await AsyncStorage.setItem("club-distance-data", jsonValue);
     } catch (e) {
       console.error("Error storing club distance data: ", e);
     }
@@ -50,7 +50,7 @@ const ClubDistances = () => {
 
   const getClubDistances = async () => {
     try {
-      const value = await AsyncStorage.getItem("my-key");
+      const value = await AsyncStorage.getItem("club-distance-data");
       if (value !== null) {
         return JSON.parse(value);
       }
