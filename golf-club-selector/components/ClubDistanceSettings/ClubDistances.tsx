@@ -1,0 +1,113 @@
+import { useEffect, useState } from "react";
+import { View, StyleSheet, Button } from "react-native";
+import ClubDistanceInput from "./ClubDistanceInput";
+import ClubsEnum from "@/consts/ClubsEnum";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const styles = StyleSheet.create({
+  distancesContainer: {
+    width: "100%",
+    flexWrap: "wrap",
+  },
+  clubDistanceContainer: {
+    width: "50%",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 3,
+  },
+});
+type ClubDistancesData = Record<ClubsEnum, number>;
+
+const ClubDistances = () => {
+  const tabBarHeight = useBottomTabBarHeight();
+  const [clubDistances, setClubDistances] = useState<ClubDistancesData>({
+    [ClubsEnum.DRIVER]: 250,
+    [ClubsEnum.THREE_WOOD]: 200,
+    [ClubsEnum.FIVE_WOOD]: 180,
+    [ClubsEnum.THREE_IRON]: 170,
+    [ClubsEnum.FOUR_IRON]: 160,
+    [ClubsEnum.FIVE_IRON]: 150,
+    [ClubsEnum.SIX_IRON]: 140,
+    [ClubsEnum.SEVEN_IRON]: 130,
+    [ClubsEnum.EIGHT_IRON]: 120,
+    [ClubsEnum.NINE_IRON]: 110,
+    [ClubsEnum.PITCHING_WEDGE]: 90,
+    [ClubsEnum.GAP_WEDGE]: 70,
+    [ClubsEnum.SAND_WEDGE]: 50,
+    [ClubsEnum.LOB_WEDGE]: 30,
+    [ClubsEnum.PUTTER]: 0,
+  });
+
+  const storeClubDistances = async (value: ClubDistancesData) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("club-distance-data", jsonValue);
+    } catch (e) {
+      console.error("Error storing club distance data: ", e);
+    }
+  };
+
+  const getClubDistances = async () => {
+    try {
+      const value = await AsyncStorage.getItem("club-distance-data");
+      if (value !== null) {
+        return JSON.parse(value);
+      }
+    } catch (e) {
+      console.error("Error fetching stored club distance data: ", e);
+    }
+  };
+
+  const handleClubDistanceChange = (clubType: ClubsEnum, distance: number) => {
+    setClubDistances((prev) => {
+      return { ...prev, [clubType]: distance };
+    });
+  };
+
+  useEffect(() => {
+    const fetchStoredClubData = async () => {
+      try {
+        const clubDistanceStoredData = await getClubDistances();
+        if (!clubDistanceStoredData) {
+          setClubDistances(clubDistances);
+        } else {
+          setClubDistances(clubDistanceStoredData);
+        }
+      } catch (e) {
+        console.error("Error fetching stored club distance data: ", e);
+      }
+    };
+    fetchStoredClubData();
+  }, []);
+
+  useEffect(() => {
+    const storeClubDistancesData = async () => {
+      await storeClubDistances(clubDistances);
+    };
+    storeClubDistancesData();
+  }, [clubDistances]);
+
+  return (
+    <View style={[styles.distancesContainer, { marginBottom: tabBarHeight }]}>
+      {Object.values(ClubsEnum).map((club) => {
+        let displayName: ClubsEnum = club;
+        if (club.includes("Wedge")) {
+          displayName = club.replace("Wedge", "W") as ClubsEnum;
+        }
+        return (
+          <View style={styles.clubDistanceContainer} key={club}>
+            <ClubDistanceInput
+              clubType={displayName}
+              distance={clubDistances[club]}
+              handleClubDistanceChange={handleClubDistanceChange}
+            />
+          </View>
+        );
+      })}
+      <Button title="Get Data" onPress={async () => await getClubDistances()} />
+    </View>
+  );
+};
+
+export default ClubDistances;

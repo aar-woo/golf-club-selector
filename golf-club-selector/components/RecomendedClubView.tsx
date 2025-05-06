@@ -65,8 +65,13 @@ const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
         : require("@/assets/images/iron-icon.png"),
   };
 
+  const fetchRecClub = async () => {
+    const club = await getRecClub(distance);
+    setClub(club);
+  };
+
   useEffect(() => {
-    setClub(getRecClub(distance));
+    fetchRecClub();
   }, [distance]);
 
   return (
