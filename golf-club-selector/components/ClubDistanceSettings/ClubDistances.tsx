@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import ClubDistanceInput from "./ClubDistanceInput";
 import ClubsEnum from "@/consts/ClubsEnum";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import colors from "@/consts/colors";
 
 const styles = StyleSheet.create({
   distancesContainer: {
     width: "100%",
+    maxHeight: 550,
     flexWrap: "wrap",
   },
   clubDistanceContainer: {
@@ -15,6 +17,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 3,
+  },
+  adjustButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    height: 45,
+    borderRadius: 10,
+    backgroundColor: colors.primaryGreen,
   },
 });
 type ClubDistancesData = Record<ClubsEnum, number>;
@@ -89,23 +100,36 @@ const ClubDistances = () => {
   }, [clubDistances]);
 
   return (
-    <View style={[styles.distancesContainer, { marginBottom: tabBarHeight }]}>
-      {Object.values(ClubsEnum).map((club) => {
-        let displayName: ClubsEnum = club;
-        if (club.includes("Wedge")) {
-          displayName = club.replace("Wedge", "W") as ClubsEnum;
-        }
-        return (
-          <View style={styles.clubDistanceContainer} key={club}>
-            <ClubDistanceInput
-              clubType={displayName}
-              distance={clubDistances[club]}
-              handleClubDistanceChange={handleClubDistanceChange}
-            />
-          </View>
-        );
-      })}
-      <Button title="Get Data" onPress={async () => await getClubDistances()} />
+    <View
+      style={[
+        {
+          width: "100%",
+          alignItems: "center",
+        },
+      ]}
+    >
+      <View style={[styles.distancesContainer]}>
+        {Object.values(ClubsEnum).map((club) => {
+          let displayName: ClubsEnum = club;
+          if (club.includes("Wedge")) {
+            displayName = club.replace("Wedge", "W") as ClubsEnum;
+          }
+          return (
+            <View style={styles.clubDistanceContainer} key={club}>
+              <ClubDistanceInput
+                clubType={displayName}
+                distance={clubDistances[club]}
+                handleClubDistanceChange={handleClubDistanceChange}
+              />
+            </View>
+          );
+        })}
+      </View>
+      <TouchableOpacity style={styles.adjustButton}>
+        <Text style={{ fontSize: 20, color: colors.snowWhite }}>
+          Adjust Distances
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
