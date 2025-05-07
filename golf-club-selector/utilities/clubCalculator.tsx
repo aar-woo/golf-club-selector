@@ -1,3 +1,4 @@
+import { ClubDistancesData } from "@/components/ClubDistanceSettings/ClubDistances";
 import ClubsEnum from "@/consts/ClubsEnum";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -42,6 +43,28 @@ const getRecClub = async (distance: number): Promise<ClubsEnum> => {
   } else {
     return ClubsEnum.PUTTER;
   }
+};
+
+export const calculateClubsGivenSevenIron = (
+  sevenIronDistance: number
+): ClubDistancesData => {
+  return {
+    [ClubsEnum.DRIVER]: sevenIronDistance + 120,
+    [ClubsEnum.THREE_WOOD]: sevenIronDistance + 70,
+    [ClubsEnum.FIVE_WOOD]: sevenIronDistance + 50,
+    [ClubsEnum.THREE_IRON]: sevenIronDistance + 40,
+    [ClubsEnum.FOUR_IRON]: sevenIronDistance + 30,
+    [ClubsEnum.FIVE_IRON]: sevenIronDistance + 20,
+    [ClubsEnum.SIX_IRON]: sevenIronDistance + 10,
+    [ClubsEnum.SEVEN_IRON]: sevenIronDistance,
+    [ClubsEnum.EIGHT_IRON]: sevenIronDistance - 10,
+    [ClubsEnum.NINE_IRON]: sevenIronDistance - 20,
+    [ClubsEnum.PITCHING_WEDGE]: sevenIronDistance - 40,
+    [ClubsEnum.GAP_WEDGE]: sevenIronDistance - 60,
+    [ClubsEnum.SAND_WEDGE]: sevenIronDistance - 80,
+    [ClubsEnum.LOB_WEDGE]: sevenIronDistance - 100,
+    [ClubsEnum.PUTTER]: 0,
+  };
 };
 
 export default getRecClub;

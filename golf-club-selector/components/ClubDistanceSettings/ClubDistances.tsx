@@ -5,6 +5,7 @@ import ClubsEnum from "@/consts/ClubsEnum";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import colors from "@/consts/colors";
+import { calculateClubsGivenSevenIron } from "@/utilities/clubCalculator";
 
 const styles = StyleSheet.create({
   distancesContainer: {
@@ -28,7 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryGreen,
   },
 });
-type ClubDistancesData = Record<ClubsEnum, number>;
+
+export type ClubDistancesData = Record<ClubsEnum, number>;
 
 const ClubDistances = () => {
   const tabBarHeight = useBottomTabBarHeight();
@@ -125,7 +127,15 @@ const ClubDistances = () => {
           );
         })}
       </View>
-      <TouchableOpacity style={styles.adjustButton}>
+      <TouchableOpacity
+        style={styles.adjustButton}
+        onPress={() => {
+          const adjustedDistances = calculateClubsGivenSevenIron(
+            clubDistances["7 Iron"]
+          );
+          setClubDistances(adjustedDistances);
+        }}
+      >
         <Text style={{ fontSize: 20, color: colors.snowWhite }}>
           Adjust Distances
         </Text>

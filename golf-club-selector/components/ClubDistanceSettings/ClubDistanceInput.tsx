@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
 import WheelPicker from "@quidone/react-native-wheel-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClubsEnum from "@/consts/ClubsEnum";
 
 const styles = StyleSheet.create({
@@ -40,6 +40,12 @@ const ClubDistanceInput = ({
   handleClubDistanceChange,
 }: ClubDistanceInputProps) => {
   const [visibleItemCount, setVisibleItemCount] = useState(1);
+  const [isAutoAdjust, setIsAutoAdjusted] = useState(false);
+
+  useEffect(() => {
+    setIsAutoAdjusted(true);
+    // setVisibleItemCount(1);
+  }, [distance]);
 
   return (
     <View style={styles.container}>
@@ -48,11 +54,15 @@ const ClubDistanceInput = ({
         data={distanceChoices}
         value={distance}
         onValueChanging={() => {
+          if (isAutoAdjust) {
+            return;
+          }
           setVisibleItemCount(3);
         }}
         visibleItemCount={visibleItemCount}
         onValueChanged={({ item: { value } }) => {
           setVisibleItemCount(1);
+          setIsAutoAdjusted(false);
           handleClubDistanceChange(clubType, value);
         }}
       />
