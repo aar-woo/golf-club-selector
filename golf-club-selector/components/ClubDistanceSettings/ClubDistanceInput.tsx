@@ -29,8 +29,8 @@ type ClubDistanceInputProps = {
 };
 
 const distanceChoices = [...Array(70).keys()].map((index) => ({
-  value: index * 5,
-  label: (index * 5).toString(),
+  value: (69 - index) * 5,
+  label: ((69 - index) * 5).toString(),
 }));
 
 const ClubDistanceInput = ({
