@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
 import colors from "@/consts/colors";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import ClubsEnum from "@/consts/ClubsEnum";
@@ -26,6 +33,8 @@ type ClubDistanceInputProps = {
   clubType: ClubsEnum;
   distance: number;
   handleClubDistanceChange: (clubType: ClubsEnum, distance: number) => void;
+  styleOverrides?: ViewStyle;
+  textStyleOverrides?: TextStyle;
 };
 
 const distanceChoices = [...Array(70).keys()].map((index) => ({
@@ -37,10 +46,14 @@ const ClubDistanceInput = ({
   clubType,
   distance,
   handleClubDistanceChange,
+  styleOverrides,
+  textStyleOverrides,
 }: ClubDistanceInputProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{clubType}:</Text>
+    <View style={[styles.container, styleOverrides as ViewStyle]}>
+      <Text style={[styles.label, textStyleOverrides as TextStyle]}>
+        {clubType}:
+      </Text>
       <WheelPicker
         data={distanceChoices}
         value={distance}

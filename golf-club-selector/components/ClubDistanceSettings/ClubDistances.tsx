@@ -16,8 +16,9 @@ import { calculateClubsGivenSevenIron } from "@/utilities/clubCalculator";
 const styles = StyleSheet.create({
   distancesContainer: {
     width: "100%",
-    maxHeight: 550,
+    maxHeight: 470,
     flexWrap: "wrap",
+    marginBottom: 20,
   },
   clubDistanceContainer: {
     width: "50%",
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 45,
     borderRadius: 10,
-    backgroundColor: colors.primaryGreen,
+    backgroundColor: colors.primaryBlue,
   },
 });
 
@@ -135,6 +136,7 @@ const ClubDistances = () => {
     >
       <View style={[styles.distancesContainer]}>
         {Object.values(ClubsEnum).map((club) => {
+          if (club === ClubsEnum.PUTTER) return;
           let displayName: ClubsEnum = club;
           if (club.includes("Wedge")) {
             displayName = club.replace("Wedge", "W") as ClubsEnum;
@@ -149,6 +151,20 @@ const ClubDistances = () => {
             </View>
           );
         })}
+      </View>
+      <View style={styles.clubDistanceContainer} key={ClubsEnum.SEVEN_IRON}>
+        <ClubDistanceInput
+          clubType={ClubsEnum.SEVEN_IRON}
+          distance={clubDistances[ClubsEnum.SEVEN_IRON]}
+          handleClubDistanceChange={handleClubDistanceChange}
+          styleOverrides={{
+            borderColor: colors.lightBlue,
+            width: 200,
+            justifyContent: "center",
+            marginBottom: 3,
+          }}
+          textStyleOverrides={{ fontSize: 23 }}
+        />
       </View>
       <TouchableOpacity
         style={styles.adjustButton}
