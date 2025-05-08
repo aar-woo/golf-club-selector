@@ -57,12 +57,12 @@ export const calculateClubsGivenSevenIron = (
     [ClubsEnum.FIVE_IRON]: sevenIronDistance + 20,
     [ClubsEnum.SIX_IRON]: sevenIronDistance + 10,
     [ClubsEnum.SEVEN_IRON]: sevenIronDistance,
-    [ClubsEnum.EIGHT_IRON]: sevenIronDistance - 10,
-    [ClubsEnum.NINE_IRON]: sevenIronDistance - 20,
-    [ClubsEnum.PITCHING_WEDGE]: sevenIronDistance - 30,
-    [ClubsEnum.GAP_WEDGE]: sevenIronDistance - 40,
-    [ClubsEnum.SAND_WEDGE]: sevenIronDistance - 50,
-    [ClubsEnum.LOB_WEDGE]: sevenIronDistance - 60,
+    [ClubsEnum.EIGHT_IRON]: Math.max(sevenIronDistance - 10, 0),
+    [ClubsEnum.NINE_IRON]: Math.max(sevenIronDistance - 20, 0),
+    [ClubsEnum.PITCHING_WEDGE]: Math.max(sevenIronDistance - 30, 0),
+    [ClubsEnum.GAP_WEDGE]: Math.max(sevenIronDistance - 40, 0),
+    [ClubsEnum.SAND_WEDGE]: Math.max(sevenIronDistance - 50, 0),
+    [ClubsEnum.LOB_WEDGE]: Math.max(sevenIronDistance - 60, 0),
     [ClubsEnum.PUTTER]: 0,
   };
 };
