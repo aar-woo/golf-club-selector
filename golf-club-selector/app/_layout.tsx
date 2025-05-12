@@ -2,11 +2,9 @@ import {
   ClubDistancesData,
   DEFAULT_CLUB_DISTANCES,
 } from "@/components/ClubDistanceSettings/ClubDistances";
-import Header from "@/components/Header";
 import { Stack } from "expo-router";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const Context = createContext<string | null>(null);
 const ClubDistancesContext = createContext<{
   clubDistanceData: ClubDistancesData | [];
   setClubDistanceData: (data: ClubDistancesData | []) => void;
