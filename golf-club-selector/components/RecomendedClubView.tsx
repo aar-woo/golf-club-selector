@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import ClubsEnum from "@/consts/ClubsEnum";
 import colors from "@/consts/colors";
+import { useClubDistancesContext } from "@/app/_layout";
+import { ClubDistancesData } from "./ClubDistanceSettings/ClubDistances";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +45,7 @@ type ClubData = {
 const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
   const [club, setClub] = useState<ClubsEnum>(ClubsEnum.PUTTER);
   const clubSplit = club.split(" ");
+  const { clubDistanceData } = useClubDistancesContext();
 
   const recClub: ClubData = {
     unit:
@@ -72,7 +75,7 @@ const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
 
   useEffect(() => {
     fetchRecClub();
-  }, [distance]);
+  }, [distance, clubDistanceData]);
 
   return (
     <View style={styles.container}>
