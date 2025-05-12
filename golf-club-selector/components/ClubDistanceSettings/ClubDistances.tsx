@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import ClubDistanceInput from "./ClubDistanceInput";
 import ClubsEnum from "@/consts/ClubsEnum";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import colors from "@/consts/colors";
 import { calculateClubsGivenSevenIron } from "@/utilities/clubCalculator";
+import { useClubDistancesContext } from "@/app/_layout";
 
 const styles = StyleSheet.create({
   distancesContainer: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const DEFAULT_CLUB_DISTANCES: ClubDistancesData = {
+export const DEFAULT_CLUB_DISTANCES: ClubDistancesData = {
   [ClubsEnum.DRIVER]: 250,
   [ClubsEnum.THREE_WOOD]: 200,
   [ClubsEnum.FIVE_WOOD]: 180,
@@ -58,11 +58,11 @@ const DEFAULT_CLUB_DISTANCES: ClubDistancesData = {
 export type ClubDistancesData = Record<ClubsEnum, number>;
 
 const ClubDistances = () => {
-  const tabBarHeight = useBottomTabBarHeight();
   const [clubDistances, setClubDistances] = useState<ClubDistancesData>(
     DEFAULT_CLUB_DISTANCES
   );
   const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const { setClubDistanceData } = useClubDistancesContext();
 
   const storeClubDistances = async (value: ClubDistancesData) => {
     try {
@@ -111,6 +111,7 @@ const ClubDistances = () => {
     const storeClubDistancesData = async () => {
       await storeClubDistances(clubDistances);
     };
+    setClubDistanceData(clubDistances);
     storeClubDistancesData();
   }, [clubDistances]);
 
