@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
 import convertDistance from "geolib/es/convertDistance";
 import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 interface MapProps {
   width?: number;
   height?: number;
   fullScreen?: boolean;
-  markerDistance: number | null;
-  handleMarkerChange: (distance: number) => void;
+  markerDistance?: number | null;
+  handleMarkerChange?: (distance: number | null) => void;
 }
 
 const styles = StyleSheet.create({
@@ -75,7 +81,7 @@ const Map = ({
   useEffect(() => {
     if (marker && location) {
       const distance = calculateDistance(marker, location);
-      handleMarkerChange(distance);
+      handleMarkerChange && handleMarkerChange(distance);
     }
   }, [marker, location]);
 
@@ -181,6 +187,20 @@ const Map = ({
           </View>
         )}
       </MapView>
+      {marker && (
+        <View style={{ position: "absolute", bottom: 15, right: 20 }}>
+          <TouchableOpacity
+            style={{ alignItems: "center" }}
+            onPress={() => {
+              setMarker(null);
+              handleMarkerChange && handleMarkerChange(null);
+            }}
+          >
+            <FontAwesome name="remove" size={24} color="red" />
+            <Text style={{ fontSize: 10, color: "red" }}>Clear</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
