@@ -1,9 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
 
-const DistanceAndClubView = () => {
+type DistanceAndClubViewProps = {
+  markerDistance: number | null;
+};
+
+const DistanceAndClubView = ({ markerDistance }: DistanceAndClubViewProps) => {
   const [distance, setDistance] = useState<number>(100);
   const [displayDistance, setDisplayDistance] = useState(distance);
   const tempDistanceRef = useRef<number>(distance);
@@ -16,6 +20,12 @@ const DistanceAndClubView = () => {
       alignItems: "center",
     },
   });
+
+  useEffect(() => {
+    if (markerDistance === null) return;
+    setDisplayDistance(markerDistance);
+    setDistance(markerDistance);
+  }, [markerDistance]);
 
   const handleClickChange = (direction: "left" | "right") => {
     switch (direction) {

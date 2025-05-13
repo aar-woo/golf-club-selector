@@ -11,6 +11,8 @@ interface MapProps {
   width?: number;
   height?: number;
   fullScreen?: boolean;
+  markerDistance: number | null;
+  handleMarkerChange: (distance: number) => void;
 }
 
 const styles = StyleSheet.create({
@@ -24,7 +26,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Map = ({ width = 340, height = 250, fullScreen = false }: MapProps) => {
+const Map = ({
+  width = 340,
+  height = 250,
+  fullScreen = false,
+  markerDistance,
+  handleMarkerChange,
+}: MapProps) => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
@@ -33,8 +41,7 @@ const Map = ({ width = 340, height = 250, fullScreen = false }: MapProps) => {
     latitude: number;
     longitude: number;
   } | null>(null);
-  const [distanceBetweenMarkers, setDistanceBetweenMarkers] =
-    useState<number>(0);
+
   const deviceHeight = Dimensions.get("window").height;
   const deviceWidth = Dimensions.get("window").width;
 
@@ -68,7 +75,7 @@ const Map = ({ width = 340, height = 250, fullScreen = false }: MapProps) => {
   useEffect(() => {
     if (marker && location) {
       const distance = calculateDistance(marker, location);
-      setDistanceBetweenMarkers(distance);
+      handleMarkerChange(distance);
     }
   }, [marker, location]);
 
@@ -167,7 +174,7 @@ const Map = ({ width = 340, height = 250, fullScreen = false }: MapProps) => {
                     fontWeight: "bold",
                   }}
                 >
-                  {distanceBetweenMarkers} yd
+                  {markerDistance} yd
                 </Text>
               </View>
             </Marker>

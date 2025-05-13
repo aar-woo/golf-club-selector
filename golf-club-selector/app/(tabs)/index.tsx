@@ -6,6 +6,7 @@ import DistanceAndClubView from "@/app/DistanceAndClubView";
 import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,13 @@ const styles = StyleSheet.create({
 
 export default function Index() {
   const tabBarHeight = useBottomTabBarHeight();
+  const [distanceBetweenMarkers, setDistanceBetweenMarkers] = useState<
+    number | null
+  >(null);
+
+  const handleMapMarkerChange = (distance: number) => {
+    setDistanceBetweenMarkers(distance);
+  };
 
   return (
     <View style={styles.container}>
@@ -42,8 +50,11 @@ export default function Index() {
       />
       <Header />
       <View style={{ ...styles.appContainer, marginBottom: tabBarHeight }}>
-        <Map />
-        <DistanceAndClubView />
+        <Map
+          markerDistance={distanceBetweenMarkers}
+          handleMarkerChange={handleMapMarkerChange}
+        />
+        <DistanceAndClubView markerDistance={distanceBetweenMarkers} />
       </View>
     </View>
   );
