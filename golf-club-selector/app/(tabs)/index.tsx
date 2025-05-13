@@ -38,7 +38,7 @@ export default function Index() {
     number | null
   >(null);
 
-  const handleMapMarkerChange = (distance: number) => {
+  const handleMapMarkerChange = (distance: number | null) => {
     setDistanceBetweenMarkers(distance);
   };
 
@@ -54,7 +54,10 @@ export default function Index() {
           markerDistance={distanceBetweenMarkers}
           handleMarkerChange={handleMapMarkerChange}
         />
-        <DistanceAndClubView markerDistance={distanceBetweenMarkers} />
+        <DistanceAndClubView
+          markerDistance={distanceBetweenMarkers}
+          handleMarkerChange={handleMapMarkerChange}
+        />
       </View>
     </View>
   );

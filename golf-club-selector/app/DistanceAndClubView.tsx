@@ -5,9 +5,13 @@ import DistanceView from "@/components/DistanceView/DistanceView";
 
 type DistanceAndClubViewProps = {
   markerDistance: number | null;
+  handleMarkerChange?: (distance: number | null) => void;
 };
 
-const DistanceAndClubView = ({ markerDistance }: DistanceAndClubViewProps) => {
+const DistanceAndClubView = ({
+  markerDistance,
+  handleMarkerChange,
+}: DistanceAndClubViewProps) => {
   const [distance, setDistance] = useState<number>(100);
   const [displayDistance, setDisplayDistance] = useState(distance);
   const tempDistanceRef = useRef<number>(distance);
@@ -25,6 +29,7 @@ const DistanceAndClubView = ({ markerDistance }: DistanceAndClubViewProps) => {
     if (markerDistance === null) return;
     setDisplayDistance(markerDistance);
     setDistance(markerDistance);
+    tempDistanceRef.current = markerDistance;
   }, [markerDistance]);
 
   const handleClickChange = (direction: "left" | "right") => {
