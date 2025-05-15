@@ -15,7 +15,7 @@ export const useClubDistancesContext = () => {
 
   if (clubDistancesContext === null) {
     throw new Error(
-      "useDistanceContext must be used within a ClubDistancesContext.Provider"
+      "useClubDistancesContext must be used within a ClubDistancesContext.Provider"
     );
   }
   return clubDistancesContext;

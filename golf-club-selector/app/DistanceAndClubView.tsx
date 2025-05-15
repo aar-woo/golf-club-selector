@@ -5,12 +5,16 @@ import DistanceView from "@/components/DistanceView/DistanceView";
 
 type DistanceAndClubViewProps = {
   markerDistance: number | null;
-  handleMarkerChange?: (distance: number | null) => void;
+  handleDistanceToMarkerChange?: (distance: number) => void;
+  currentInputDirection?: "left" | "right" | null;
+  handleDirectionToMarkerChange?: (direction: "left" | "right") => void;
 };
 
 const DistanceAndClubView = ({
   markerDistance,
-  handleMarkerChange,
+  handleDistanceToMarkerChange,
+  handleDirectionToMarkerChange,
+  currentInputDirection,
 }: DistanceAndClubViewProps) => {
   const [distance, setDistance] = useState<number>(100);
   const [displayDistance, setDisplayDistance] = useState(distance);
@@ -41,11 +45,19 @@ const DistanceAndClubView = ({
         setDistance(distance - 1);
         tempDistanceRef.current = tempDistanceRef.current - 1;
         setDisplayDistance(tempDistanceRef.current);
+        if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
+          handleDirectionToMarkerChange("left");
+        handleDistanceToMarkerChange &&
+          handleDistanceToMarkerChange(tempDistanceRef.current);
         break;
       case "right":
         setDistance(distance + 1);
         tempDistanceRef.current = tempDistanceRef.current + 1;
         setDisplayDistance(tempDistanceRef.current);
+        if (currentInputDirection !== "right" && handleDirectionToMarkerChange)
+          handleDirectionToMarkerChange("right");
+        handleDistanceToMarkerChange &&
+          handleDistanceToMarkerChange(tempDistanceRef.current);
     }
   };
 
@@ -59,12 +71,23 @@ const DistanceAndClubView = ({
           }
           tempDistanceRef.current = Math.max(0, tempDistanceRef.current - 1);
           setDisplayDistance(tempDistanceRef.current);
+          if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
+            handleDirectionToMarkerChange("left");
+          handleDistanceToMarkerChange &&
+            handleDistanceToMarkerChange(tempDistanceRef.current);
         }, 40);
         break;
       case "right":
         counterRef.current = setInterval(() => {
           tempDistanceRef.current = tempDistanceRef.current + 1;
           setDisplayDistance(tempDistanceRef.current);
+          if (
+            currentInputDirection !== "right" &&
+            handleDirectionToMarkerChange
+          )
+            handleDirectionToMarkerChange("right");
+          handleDistanceToMarkerChange &&
+            handleDistanceToMarkerChange(tempDistanceRef.current);
         }, 40);
     }
   };

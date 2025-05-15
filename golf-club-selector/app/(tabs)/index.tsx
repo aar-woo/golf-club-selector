@@ -37,6 +37,11 @@ export default function Index() {
   const [distanceBetweenMarkers, setDistanceBetweenMarkers] = useState<
     number | null
   >(null);
+  const [distanceInputToMarker, setDistanceInputToMarker] = useState<
+    number | null
+  >(null);
+  const [distanceInputDirectionToMarker, setDistanceInputDirectionToMarker] =
+    useState<"left" | "right" | null>(null);
 
   const handleMapMarkerChange = (distance: number | null) => {
     setDistanceBetweenMarkers(distance);
@@ -52,11 +57,15 @@ export default function Index() {
       <View style={{ ...styles.appContainer, marginBottom: tabBarHeight }}>
         <Map
           markerDistance={distanceBetweenMarkers}
+          inputDistance={distanceInputToMarker}
+          inputDirection={distanceInputDirectionToMarker}
           handleMarkerChange={handleMapMarkerChange}
         />
         <DistanceAndClubView
           markerDistance={distanceBetweenMarkers}
-          handleMarkerChange={handleMapMarkerChange}
+          handleDistanceToMarkerChange={setDistanceInputToMarker}
+          currentInputDirection={distanceInputDirectionToMarker}
+          handleDirectionToMarkerChange={setDistanceInputDirectionToMarker}
         />
       </View>
     </View>

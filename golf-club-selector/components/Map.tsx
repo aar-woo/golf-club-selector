@@ -10,15 +10,20 @@ import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
 import convertDistance from "geolib/es/convertDistance";
+import getRhumbLineBearing from "geolib/es/getRhumbLineBearing";
+import { computeDestinationPoint } from "geolib";
 import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+
 interface MapProps {
   width?: number;
   height?: number;
   fullScreen?: boolean;
   markerDistance?: number | null;
   handleMarkerChange?: (distance: number | null) => void;
+  inputDistance?: number | null;
+  inputDirection?: "left" | "right" | null;
 }
 
 const styles = StyleSheet.create({
@@ -38,6 +43,8 @@ const Map = ({
   fullScreen = false,
   markerDistance,
   handleMarkerChange,
+  inputDistance,
+  inputDirection,
 }: MapProps) => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
@@ -46,6 +53,11 @@ const Map = ({
   const [marker, setMarker] = useState<{
     latitude: number;
     longitude: number;
+  } | null>(null);
+
+  const [lineCoordinates, setLineCoordinates] = useState<{
+    start: { latitude: number; longitude: number };
+    end: { latitude: number; longitude: number };
   } | null>(null);
 
   const deviceHeight = Dimensions.get("window").height;
@@ -81,9 +93,38 @@ const Map = ({
   useEffect(() => {
     if (marker && location) {
       const distance = calculateDistance(marker, location);
+
       handleMarkerChange && handleMarkerChange(distance);
     }
   }, [marker, location]);
+
+  useEffect(() => {
+    if (marker && location) {
+      setLineCoordinates({
+        start: {
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+        },
+        end: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+      });
+    }
+  }, [marker, location]);
+
+  useEffect(() => {
+    if (inputDistance && location && marker) {
+      const bearing = getRhumbLineBearing(location.coords, marker);
+      const newMarkerCoords = computeDestinationPoint(
+        marker,
+        inputDirection === "left" ? -1 : 1,
+        bearing
+      );
+
+      setMarker(newMarkerCoords);
+    }
+  }, [inputDistance]);
 
   return (
     <View
@@ -110,6 +151,18 @@ const Map = ({
         onPress={(e) => {
           const { latitude, longitude } = e.nativeEvent.coordinate;
           setMarker({ latitude, longitude });
+
+          location &&
+            setLineCoordinates({
+              start: {
+                latitude: location?.coords.latitude,
+                longitude: location?.coords.longitude,
+              },
+              end: {
+                latitude: latitude,
+                longitude: longitude,
+              },
+            });
         }}
       >
         {marker && (
@@ -141,27 +194,24 @@ const Map = ({
             color={colors.lightBlue}
           />
         </Marker>
-        {marker && location && (
+        {marker && location && lineCoordinates && (
           <View>
             <Polyline
-              coordinates={[
-                {
-                  latitude: marker?.latitude,
-                  longitude: marker?.longitude,
-                },
-                {
-                  latitude: location?.coords.latitude,
-                  longitude: location?.coords.longitude,
-                },
-              ]}
+              coordinates={[lineCoordinates.start, lineCoordinates.end]}
               strokeColor={colors.gray}
               strokeWidth={1}
               lineDashPattern={[3, 3]}
             />
             <Marker
               coordinate={{
-                latitude: (marker.latitude + location.coords.latitude) / 2,
-                longitude: (marker.longitude + location.coords.longitude) / 2,
+                latitude:
+                  (lineCoordinates.start.latitude +
+                    lineCoordinates.end.latitude) /
+                  2,
+                longitude:
+                  (lineCoordinates.start.longitude +
+                    lineCoordinates.end.longitude) /
+                  2,
               }}
               anchor={{ x: 0.5, y: 0.5 }}
             >
@@ -192,6 +242,7 @@ const Map = ({
           <TouchableOpacity
             style={{ alignItems: "center" }}
             onPress={() => {
+              setLineCoordinates(null);
               setMarker(null);
               handleMarkerChange && handleMarkerChange(null);
             }}
