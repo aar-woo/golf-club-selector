@@ -9,9 +9,11 @@ import {
 import MapView, { Marker, Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import * as Location from "expo-location";
 import getDistance from "geolib/es/getDistance";
-import convertDistance from "geolib/es/convertDistance";
-import getRhumbLineBearing from "geolib/es/getRhumbLineBearing";
-import { computeDestinationPoint } from "geolib";
+import {
+  computeDestinationPoint,
+  convertDistance,
+  getRhumbLineBearing,
+} from "geolib";
 import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -83,16 +85,16 @@ const Map = ({
       latitude: number;
       longitude: number;
     },
-    location: Location.LocationObject
+    location: { latitude: number; longitude: number }
   ) => {
-    let distance = getDistance(marker, location.coords);
+    let distance = getDistance(marker, location);
     distance = Math.round(convertDistance(distance, "yd"));
     return distance;
   };
 
   useEffect(() => {
     if (marker && location) {
-      const distance = calculateDistance(marker, location);
+      const distance = calculateDistance(marker, location.coords);
 
       handleMarkerChange && handleMarkerChange(distance);
     }
@@ -114,11 +116,32 @@ const Map = ({
   }, [marker, location]);
 
   useEffect(() => {
-    if (inputDistance && location && marker) {
+    if (
+      (inputDistance || inputDistance === 0) &&
+      markerDistance &&
+      location &&
+      marker
+    ) {
+      if (inputDistance === 0) {
+        setMarker(null);
+        return;
+      }
+
       const bearing = getRhumbLineBearing(location.coords, marker);
+      let increment;
+      let yardsToMeters;
+
+      if (Math.abs(inputDistance - markerDistance) >= 100) {
+        increment = inputDirection === "left" ? -100 : 100;
+        yardsToMeters = increment * 0.9144;
+      } else {
+        increment = inputDirection === "left" ? -1 : 1;
+        yardsToMeters = Math.round(increment * 0.9144);
+      }
+
       const newMarkerCoords = computeDestinationPoint(
         marker,
-        inputDirection === "left" ? -1 : 1,
+        yardsToMeters,
         bearing
       );
 
