@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
 
 type DistanceAndClubViewProps = {
   markerDistance: number | null;
-  handleDistanceToMarkerChange?: (distance: number) => void;
-  currentInputDirection?: "left" | "right" | null;
-  handleDirectionToMarkerChange?: (direction: "left" | "right") => void;
+  handleDistanceToMarkerChange: (distance: number) => void;
+  currentInputDirection: "left" | "right" | null;
+  handleDirectionToMarkerChange: (direction: "left" | "right") => void;
 };
 
 const DistanceAndClubView = ({
@@ -29,6 +29,20 @@ const DistanceAndClubView = ({
     },
   });
 
+  const handleInputToMarkerUpdate = useCallback(
+    (
+      distance: number,
+      currentDirection: "left" | "right" | null,
+      inputDirection: "left" | "right"
+    ) => {
+      if (currentDirection !== inputDirection) {
+        handleDirectionToMarkerChange(inputDirection);
+      }
+      handleDistanceToMarkerChange(distance);
+    },
+    [handleDirectionToMarkerChange, handleDistanceToMarkerChange]
+  );
+
   useEffect(() => {
     if (markerDistance === null) return;
     setDisplayDistance(markerDistance);
@@ -45,19 +59,21 @@ const DistanceAndClubView = ({
         setDistance(distance - 1);
         tempDistanceRef.current = tempDistanceRef.current - 1;
         setDisplayDistance(tempDistanceRef.current);
-        if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
-          handleDirectionToMarkerChange("left");
-        handleDistanceToMarkerChange &&
-          handleDistanceToMarkerChange(tempDistanceRef.current);
+        handleInputToMarkerUpdate(
+          tempDistanceRef.current,
+          currentInputDirection,
+          "left"
+        );
         break;
       case "right":
         setDistance(distance + 1);
         tempDistanceRef.current = tempDistanceRef.current + 1;
         setDisplayDistance(tempDistanceRef.current);
-        if (currentInputDirection !== "right" && handleDirectionToMarkerChange)
-          handleDirectionToMarkerChange("right");
-        handleDistanceToMarkerChange &&
-          handleDistanceToMarkerChange(tempDistanceRef.current);
+        handleInputToMarkerUpdate(
+          tempDistanceRef.current,
+          currentInputDirection,
+          "right"
+        );
     }
   };
 
@@ -71,23 +87,22 @@ const DistanceAndClubView = ({
           }
           tempDistanceRef.current = Math.max(0, tempDistanceRef.current - 1);
           setDisplayDistance(tempDistanceRef.current);
-          if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
-            handleDirectionToMarkerChange("left");
-          handleDistanceToMarkerChange &&
-            handleDistanceToMarkerChange(tempDistanceRef.current);
+          handleInputToMarkerUpdate(
+            tempDistanceRef.current,
+            currentInputDirection,
+            "left"
+          );
         }, 40);
         break;
       case "right":
         counterRef.current = setInterval(() => {
           tempDistanceRef.current = tempDistanceRef.current + 1;
           setDisplayDistance(tempDistanceRef.current);
-          if (
-            currentInputDirection !== "right" &&
-            handleDirectionToMarkerChange
-          )
-            handleDirectionToMarkerChange("right");
-          handleDistanceToMarkerChange &&
-            handleDistanceToMarkerChange(tempDistanceRef.current);
+          handleInputToMarkerUpdate(
+            tempDistanceRef.current,
+            currentInputDirection,
+            "right"
+          );
         }, 40);
     }
   };
@@ -107,28 +122,31 @@ const DistanceAndClubView = ({
           setDistance(0);
           tempDistanceRef.current = 0;
           setDisplayDistance(0);
-          if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
-            handleDirectionToMarkerChange("left");
-          handleDistanceToMarkerChange &&
-            handleDistanceToMarkerChange(tempDistanceRef.current);
+          handleInputToMarkerUpdate(
+            tempDistanceRef.current,
+            currentInputDirection,
+            "left"
+          );
           return;
         }
         setDistance(distance - 100);
         tempDistanceRef.current = tempDistanceRef.current - 100;
         setDisplayDistance(tempDistanceRef.current);
-        if (currentInputDirection !== "left" && handleDirectionToMarkerChange)
-          handleDirectionToMarkerChange("left");
-        handleDistanceToMarkerChange &&
-          handleDistanceToMarkerChange(tempDistanceRef.current);
+        handleInputToMarkerUpdate(
+          tempDistanceRef.current,
+          currentInputDirection,
+          "left"
+        );
         break;
       case "right":
         setDistance(distance + 100);
         tempDistanceRef.current = tempDistanceRef.current + 100;
         setDisplayDistance(tempDistanceRef.current);
-        if (currentInputDirection !== "right" && handleDirectionToMarkerChange)
-          handleDirectionToMarkerChange("right");
-        handleDistanceToMarkerChange &&
-          handleDistanceToMarkerChange(tempDistanceRef.current);
+        handleInputToMarkerUpdate(
+          tempDistanceRef.current,
+          currentInputDirection,
+          "right"
+        );
     }
   };
 
