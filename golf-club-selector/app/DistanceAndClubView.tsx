@@ -17,6 +17,20 @@ const DistanceAndClubView = ({
   handleDirectionToMarkerChange,
   currentInputDirection,
 }: DistanceAndClubViewProps) => {
+  const handleInputToMarkerUpdate = useCallback(
+    (
+      distance: number,
+      currentDirection: "left" | "right" | null,
+      inputDirection: "left" | "right"
+    ) => {
+      if (currentDirection !== inputDirection) {
+        handleDirectionToMarkerChange(inputDirection);
+      }
+      handleDistanceToMarkerChange(distance);
+    },
+    [handleDirectionToMarkerChange, handleDistanceToMarkerChange]
+  );
+
   const {
     distance,
     displayDistance,
@@ -25,7 +39,11 @@ const DistanceAndClubView = ({
     handleLongPress,
     handleLongPressOut,
     handleDragRelease,
-  } = useDistanceManager(markerDistance || 100);
+  } = useDistanceManager(
+    markerDistance || 100,
+    currentInputDirection,
+    markerDistance ? handleInputToMarkerUpdate : undefined
+  );
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -33,21 +51,6 @@ const DistanceAndClubView = ({
       alignItems: "center",
     },
   });
-
-  const handleInputToMarkerUpdate = useCallback(
-    (
-      distance: number,
-      currentDirection: "left" | "right" | null,
-      inputDirection: "left" | "right"
-    ) => {
-      if (!markerDistance) return;
-      if (currentDirection !== inputDirection) {
-        handleDirectionToMarkerChange(inputDirection);
-      }
-      handleDistanceToMarkerChange(distance);
-    },
-    [handleDirectionToMarkerChange, handleDistanceToMarkerChange]
-  );
 
   useEffect(() => {
     if (markerDistance === null) return;

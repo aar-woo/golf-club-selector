@@ -59,7 +59,7 @@ type DistanceInputButtonType = {
   handleClick: (direction: "left" | "right") => void;
   handleLongPress: (direction: "left" | "right") => void;
   handleDragRelease: (direction: "left" | "right") => void;
-  handleLongPressOut: () => void;
+  handleLongPressOut: (direction: "left" | "right") => void;
 };
 
 const DistanceInputButton = ({
@@ -175,7 +175,7 @@ const DistanceInputButton = ({
           }}
           onPressOut={() => {
             setIsPressed(null);
-            handleLongPressOut();
+            handleLongPressOut("left");
           }}
           delayLongPress={100}
         >
@@ -212,7 +212,7 @@ const DistanceInputButton = ({
           }}
           onPressOut={() => {
             setIsPressed(null);
-            handleLongPressOut();
+            handleLongPressOut("right");
           }}
           delayLongPress={200}
         >

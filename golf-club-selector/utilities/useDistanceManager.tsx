@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
-const useDistanceManager = (initialDistance: number) => {
+const useDistanceManager = (
+  initialDistance: number,
+  currentDirection: "left" | "right" | null,
+  markerUpdateHandler?: (
+    distance: number,
+    currentDirection: "left" | "right" | null,
+    inputDirection: "left" | "right"
+  ) => void
+) => {
   const [distance, setDistance] = useState<number>(initialDistance);
   const [displayDistance, setDisplayDistance] =
     useState<number>(initialDistance);
@@ -13,16 +21,18 @@ const useDistanceManager = (initialDistance: number) => {
     setDisplayDistance(initialDistance);
   }, [initialDistance]);
 
-  const updateDistance = (distance: number) => {
+  const updateDistance = (distance: number, direction: "left" | "right") => {
     setDistance(distance);
     setDisplayDistance(distance);
     tempDistanceRef.current = distance;
+    markerUpdateHandler &&
+      markerUpdateHandler(distance, currentDirection, direction);
   };
 
   const handleClickChange = (direction: "left" | "right") => {
     const newDistance =
       direction === "left" ? Math.max(0, distance - 1) : distance + 1;
-    updateDistance(newDistance);
+    updateDistance(newDistance, direction);
   };
 
   const handleLongPress = (direction: "left" | "right") => {
@@ -36,10 +46,16 @@ const useDistanceManager = (initialDistance: number) => {
           ? Math.max(0, tempDistanceRef.current - 1)
           : tempDistanceRef.current + 1;
       setDisplayDistance(tempDistanceRef.current);
+      markerUpdateHandler &&
+        markerUpdateHandler(
+          tempDistanceRef.current,
+          currentDirection,
+          direction
+        );
     }, 40);
   };
 
-  const handleLongPressOut = () => {
+  const handleLongPressOut = (direction: "left" | "right") => {
     if (counterRef.current) {
       clearInterval(counterRef.current);
       setDistance(tempDistanceRef.current);
@@ -50,13 +66,13 @@ const useDistanceManager = (initialDistance: number) => {
   const handleDragRelease = (direction: "left" | "right") => {
     if (direction === "left") {
       if (distance <= 100) {
-        updateDistance(0);
+        updateDistance(0, direction);
       }
     } else {
     }
     const newDistance =
       direction === "left" ? Math.max(0, distance - 100) : distance + 100;
-    updateDistance(newDistance);
+    updateDistance(newDistance, direction);
   };
 
   return {
