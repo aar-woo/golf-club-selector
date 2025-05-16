@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import DISTANCE_CONFIG from "@/consts/constants";
+import DISTANCE_CONFIG, { InputDirection } from "@/consts/constants";
 
 const { LONG_PRESS_INTERVAL, DRAG_INCREMENT } = DISTANCE_CONFIG;
 
 const useDistanceManager = (
   initialDistance: number,
-  currentDirection: "left" | "right" | null,
+  currentDirection: InputDirection | null,
   markerUpdateHandler?: (
     distance: number,
-    currentDirection: "left" | "right" | null,
-    inputDirection: "left" | "right"
+    currentDirection: InputDirection | null,
+    inputDirection: InputDirection
   ) => void
 ) => {
   const [distance, setDistance] = useState<number>(initialDistance);
@@ -24,7 +24,7 @@ const useDistanceManager = (
     setDisplayDistance(initialDistance);
   }, [initialDistance]);
 
-  const updateDistance = (distance: number, direction: "left" | "right") => {
+  const updateDistance = (distance: number, direction: InputDirection) => {
     setDistance(distance);
     setDisplayDistance(distance);
     tempDistanceRef.current = distance;
@@ -32,13 +32,13 @@ const useDistanceManager = (
       markerUpdateHandler(distance, currentDirection, direction);
   };
 
-  const handleClickChange = (direction: "left" | "right") => {
+  const handleClickChange = (direction: InputDirection) => {
     const newDistance =
       direction === "left" ? Math.max(0, distance - 1) : distance + 1;
     updateDistance(newDistance, direction);
   };
 
-  const handleLongPress = (direction: "left" | "right") => {
+  const handleLongPress = (direction: InputDirection) => {
     counterRef.current = setInterval(() => {
       if (tempDistanceRef.current <= 0 && counterRef.current) {
         clearInterval(counterRef.current);
@@ -66,7 +66,7 @@ const useDistanceManager = (
     }
   };
 
-  const handleDragRelease = (direction: "left" | "right") => {
+  const handleDragRelease = (direction: InputDirection) => {
     if (direction === "left") {
       if (distance <= 100) {
         updateDistance(0, direction);

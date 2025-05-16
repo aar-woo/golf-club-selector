@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import colors from "@/consts/colors";
+import { InputDirection } from "@/consts/constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -56,9 +57,9 @@ const styles = StyleSheet.create({
 });
 
 type DistanceInputButtonType = {
-  handleClick: (direction: "left" | "right") => void;
-  handleLongPress: (direction: "left" | "right") => void;
-  handleDragRelease: (direction: "left" | "right") => void;
+  handleClick: (direction: InputDirection) => void;
+  handleLongPress: (direction: InputDirection) => void;
+  handleDragRelease: (direction: InputDirection) => void;
   handleLongPressOut: () => void;
 };
 
@@ -68,7 +69,7 @@ const DistanceInputButton = ({
   handleLongPressOut,
   handleDragRelease,
 }: DistanceInputButtonType) => {
-  const [isPressed, setIsPressed] = useState<"left" | "right" | null>(null);
+  const [isPressed, setIsPressed] = useState<InputDirection | null>(null);
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
 

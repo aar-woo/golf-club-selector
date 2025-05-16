@@ -3,15 +3,15 @@ import { View, StyleSheet } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
 import useDistanceManager from "@/utilities/useDistanceManager";
-import DISTANCE_CONFIG from "@/consts/constants";
+import DISTANCE_CONFIG, { InputDirection } from "@/consts/constants";
 
 const { INITIAL_DISTANCE } = DISTANCE_CONFIG;
 
 type DistanceAndClubViewProps = {
   markerDistance: number | null;
   handleDistanceToMarkerChange: (distance: number) => void;
-  currentInputDirection: "left" | "right" | null;
-  handleDirectionToMarkerChange: (direction: "left" | "right") => void;
+  currentInputDirection: InputDirection | null;
+  handleDirectionToMarkerChange: (direction: InputDirection) => void;
 };
 
 const DistanceAndClubView = ({
@@ -23,8 +23,8 @@ const DistanceAndClubView = ({
   const handleInputToMarkerUpdate = useCallback(
     (
       distance: number,
-      currentDirection: "left" | "right" | null,
-      inputDirection: "left" | "right"
+      currentDirection: InputDirection | null,
+      inputDirection: InputDirection
     ) => {
       if (currentDirection !== inputDirection) {
         handleDirectionToMarkerChange(inputDirection);

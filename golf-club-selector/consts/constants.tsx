@@ -6,4 +6,6 @@ const DISTANCE_CONFIG = {
 
 export const YARD_TO_METER_CONVERSION_FACTOR = 0.9144;
 
+export type InputDirection = "left" | "right";
+
 export default DISTANCE_CONFIG;

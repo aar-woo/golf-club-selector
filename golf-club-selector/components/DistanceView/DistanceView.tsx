@@ -1,6 +1,7 @@
 import DistanceInputButton from "./DistanceInputButton";
 import { Text, View, StyleSheet } from "react-native";
 import colors from "@/consts/colors";
+import { InputDirection } from "@/consts/constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,9 +24,9 @@ const styles = StyleSheet.create({
 
 type DistanceViewType = {
   distance: number;
-  onClickChange: (direction: "left" | "right") => void;
-  onLongPress: (direction: "left" | "right") => void;
-  onDragRelease: (direction: "left" | "right") => void;
+  onClickChange: (direction: InputDirection) => void;
+  onLongPress: (direction: InputDirection) => void;
+  onDragRelease: (direction: InputDirection) => void;
   onLongPressOut: () => void;
 };
 

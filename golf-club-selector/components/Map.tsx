@@ -18,6 +18,7 @@ import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import DISTANCE_CONFIG, {
+  InputDirection,
   YARD_TO_METER_CONVERSION_FACTOR,
 } from "@/consts/constants";
 const { DRAG_INCREMENT } = DISTANCE_CONFIG;
@@ -29,7 +30,7 @@ interface MapProps {
   markerDistance?: number | null;
   handleMarkerChange?: (distance: number | null) => void;
   inputDistance?: number | null;
-  inputDirection?: "left" | "right" | null;
+  inputDirection?: InputDirection | null;
 }
 
 const styles = StyleSheet.create({

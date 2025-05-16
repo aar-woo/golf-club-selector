@@ -7,6 +7,7 @@ import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useState } from "react";
+import { InputDirection } from "@/consts/constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +42,7 @@ export default function Index() {
     number | null
   >(null);
   const [distanceInputDirectionToMarker, setDistanceInputDirectionToMarker] =
-    useState<"left" | "right" | null>(null);
+    useState<InputDirection | null>(null);
 
   const handleMapMarkerChange = (distance: number | null) => {
     setDistanceBetweenMarkers(distance);
