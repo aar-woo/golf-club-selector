@@ -26,7 +26,7 @@ type DistanceViewType = {
   onClickChange: (direction: "left" | "right") => void;
   onLongPress: (direction: "left" | "right") => void;
   onDragRelease: (direction: "left" | "right") => void;
-  onLongPressOut: (direction: "left" | "right") => void;
+  onLongPressOut: () => void;
 };
 
 const DistanceView = ({

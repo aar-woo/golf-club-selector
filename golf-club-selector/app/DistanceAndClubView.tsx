@@ -3,6 +3,9 @@ import { View, StyleSheet } from "react-native";
 import RecommendedClubView from "@/components/RecomendedClubView";
 import DistanceView from "@/components/DistanceView/DistanceView";
 import useDistanceManager from "@/utilities/useDistanceManager";
+import DISTANCE_CONFIG from "@/consts/constants";
+
+const { INITIAL_DISTANCE } = DISTANCE_CONFIG;
 
 type DistanceAndClubViewProps = {
   markerDistance: number | null;
@@ -40,7 +43,7 @@ const DistanceAndClubView = ({
     handleLongPressOut,
     handleDragRelease,
   } = useDistanceManager(
-    markerDistance || 100,
+    markerDistance || INITIAL_DISTANCE,
     currentInputDirection,
     markerDistance ? handleInputToMarkerUpdate : undefined
   );

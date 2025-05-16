@@ -17,6 +17,10 @@ import {
 import colors from "@/consts/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import DISTANCE_CONFIG, {
+  YARD_TO_METER_CONVERSION_FACTOR,
+} from "@/consts/constants";
+const { DRAG_INCREMENT } = DISTANCE_CONFIG;
 
 interface MapProps {
   width?: number;
@@ -132,11 +136,12 @@ const Map = ({
       let yardsToMeters;
 
       if (Math.abs(inputDistance - markerDistance) >= 100) {
-        increment = inputDirection === "left" ? -100 : 100;
-        yardsToMeters = increment * 0.9144;
+        increment =
+          inputDirection === "left" ? -DRAG_INCREMENT : DRAG_INCREMENT;
+        yardsToMeters = increment * YARD_TO_METER_CONVERSION_FACTOR;
       } else {
         increment = inputDirection === "left" ? -1 : 1;
-        yardsToMeters = Math.round(increment * 0.9144);
+        yardsToMeters = Math.round(increment * YARD_TO_METER_CONVERSION_FACTOR);
       }
 
       const newMarkerCoords = computeDestinationPoint(

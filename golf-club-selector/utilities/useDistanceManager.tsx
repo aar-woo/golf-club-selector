@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import DISTANCE_CONFIG from "@/consts/constants";
+
+const { LONG_PRESS_INTERVAL, DRAG_INCREMENT } = DISTANCE_CONFIG;
 
 const useDistanceManager = (
   initialDistance: number,
@@ -52,10 +55,10 @@ const useDistanceManager = (
           currentDirection,
           direction
         );
-    }, 40);
+    }, LONG_PRESS_INTERVAL);
   };
 
-  const handleLongPressOut = (direction: "left" | "right") => {
+  const handleLongPressOut = () => {
     if (counterRef.current) {
       clearInterval(counterRef.current);
       setDistance(tempDistanceRef.current);
@@ -71,7 +74,9 @@ const useDistanceManager = (
     } else {
     }
     const newDistance =
-      direction === "left" ? Math.max(0, distance - 100) : distance + 100;
+      direction === "left"
+        ? Math.max(0, distance - DRAG_INCREMENT)
+        : distance + DRAG_INCREMENT;
     updateDistance(newDistance, direction);
   };
 
