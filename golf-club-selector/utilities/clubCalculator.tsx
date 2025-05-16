@@ -12,7 +12,7 @@ const getRecClub = async (distance: number): Promise<ClubsEnum> => {
     console.error("Error fetching stored club distance data: ", e);
   }
 
-  if (distance < clubData[ClubsEnum.LOB_WEDGE] - 10) {
+  if (distance < 20) {
     return ClubsEnum.PUTTER;
   } else if (distance < clubData[ClubsEnum.LOB_WEDGE]) {
     return ClubsEnum.LOB_WEDGE;
@@ -40,7 +40,7 @@ const getRecClub = async (distance: number): Promise<ClubsEnum> => {
     return ClubsEnum.FIVE_WOOD;
   } else if (distance <= clubData[ClubsEnum.THREE_WOOD]) {
     return ClubsEnum.THREE_WOOD;
-  } else if (distance > clubData[ClubsEnum.DRIVER]) {
+  } else {
     return ClubsEnum.DRIVER;
   }
 };

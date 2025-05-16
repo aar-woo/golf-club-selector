@@ -6,6 +6,8 @@ import DistanceAndClubView from "@/app/DistanceAndClubView";
 import { StyleSheet } from "react-native";
 import Map from "@/components/Map";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useState } from "react";
+import { InputDirection } from "@/consts/constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +35,18 @@ const styles = StyleSheet.create({
 
 export default function Index() {
   const tabBarHeight = useBottomTabBarHeight();
+  const [distanceBetweenMarkers, setDistanceBetweenMarkers] = useState<
+    number | null
+  >(null);
+  const [distanceInputToMarker, setDistanceInputToMarker] = useState<
+    number | null
+  >(null);
+  const [distanceInputDirectionToMarker, setDistanceInputDirectionToMarker] =
+    useState<InputDirection | null>(null);
+
+  const handleMapMarkerChange = (distance: number | null) => {
+    setDistanceBetweenMarkers(distance);
+  };
 
   return (
     <View style={styles.container}>
@@ -42,8 +56,18 @@ export default function Index() {
       />
       <Header />
       <View style={{ ...styles.appContainer, marginBottom: tabBarHeight }}>
-        <Map />
-        <DistanceAndClubView />
+        <Map
+          markerDistance={distanceBetweenMarkers}
+          inputDistance={distanceInputToMarker}
+          inputDirection={distanceInputDirectionToMarker}
+          handleMarkerChange={handleMapMarkerChange}
+        />
+        <DistanceAndClubView
+          markerDistance={distanceBetweenMarkers}
+          handleDistanceToMarkerChange={setDistanceInputToMarker}
+          currentInputDirection={distanceInputDirectionToMarker}
+          handleDirectionToMarkerChange={setDistanceInputDirectionToMarker}
+        />
       </View>
     </View>
   );

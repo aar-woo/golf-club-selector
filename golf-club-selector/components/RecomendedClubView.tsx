@@ -69,8 +69,11 @@ const RecommendedClubView = ({ distance }: RecomendedClubViewType) => {
   };
 
   const fetchRecClub = async () => {
+    if (typeof distance !== "number" || isNaN(distance)) return;
     const club = await getRecClub(distance);
-    setClub(club);
+    if (club) {
+      setClub(club);
+    }
   };
 
   useEffect(() => {
